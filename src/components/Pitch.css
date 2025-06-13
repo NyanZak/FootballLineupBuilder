@@ -1,0 +1,41 @@
+.pitch-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 125px);
+  grid-template-rows: repeat(5, 100px);
+  gap: 5px;
+
+  width: 850px;          /* match grid total width: 125 * 5 + gap spacing */
+  height: 700px;         /* force a taller height for the background */
+  margin: 100px auto 0 auto;
+
+  background-repeat: no-repeat;
+  background-position: center;
+
+  border-radius: 10px;
+}
+
+.formation-select {
+  font-size: 18px;        /* Increase text size */
+  padding: 15px 15px;     /* Bigger clickable area and height */
+  width: 180px;           /* Wider dropdown */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #282828;
+  color: white;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+#pitch {
+  box-shadow: none !important;
+  transition: none !important;
+
+}
+
+.player-input {
+  text-align: center !important;
+  font-family: Arvo, sans-serif !important;
+  background-color: #282828 !important;
+  color: white !important;
+}

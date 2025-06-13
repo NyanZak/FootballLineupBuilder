@@ -1,0 +1,389 @@
+import React, { useState, useEffect, useRef } from "react";
+import FormationLayouts from './FormationLayouts';
+import "./Pitch.css";
+import pitchPng from "../assets/pitch.png";
+import html2canvas from "html2canvas"; 
+
+function EditablePlayerInput({
+  pos,
+  x,
+  y,
+  playerName,
+  updatePlayer,
+  draggedPos,
+  isDragging,
+  onMouseDown = () => {},
+  onMouseUp = () => {},
+}){
+  const [localValue, setLocalValue] = useState(playerName);
+  const [inputWidth, setInputWidth] = useState(60);
+  const spanRef = useRef(null);
+  const debounceTimeout = useRef(null);
+  useEffect(() => {
+    setLocalValue(playerName);
+    setInputWidth(100);
+  }, [playerName]);
+
+useEffect(() => {
+  const span = spanRef.current;
+  if (span) {
+    requestAnimationFrame(() => {
+      const width = Math.min(Math.max(span.offsetWidth + 20, 100), 240);
+      setInputWidth(width);
+    });
+  }
+}, [localValue]);
+
+
+ const handleChange = (e) => {
+    const val = e.target.value;
+    setLocalValue(val);
+    updatePlayer(pos, val);
+
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+
+    if (val.trim() === "") {
+      setInputWidth(100);
+      return;
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      const span = spanRef.current;
+      if (span) {
+        const width = Math.min(Math.max(span.offsetWidth + 20, 40), 240);
+        setInputWidth(width);
+      }
+    }, 1000);
+  };
+
+return (
+    <>
+      <div
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        style={{
+          position: "absolute",
+          left: `${x * 125 + 30}px`,
+          top: `${y * 100 + 34}px`,
+          transform: "translate(-50%, 80%)",
+          cursor:
+            draggedPos && draggedPos.current === pos && isDragging
+              ? "grabbing"
+              : "grab",
+          userSelect: "none",
+        }}
+      >
+        <input
+          type="text"
+          value={localValue}
+          onChange={handleChange}
+          placeholder={`${pos} Player`}
+          style={{
+            width: `${inputWidth}px`,
+            padding: "1px 8px",
+            fontSize: "16px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            outline: "none",
+            zIndex: 10,
+            backgroundColor: "#282828",
+            color: "white",
+            textAlign: "center",
+            boxSizing: "border-box",
+            transition: "width 0.15s ease",
+            lineHeight: "24px",
+            cursor: "text", // <- explicitly text cursor for input
+          }}
+        />
+      </div>
+
+      <span
+        ref={spanRef}
+        style={{
+          position: "absolute",
+          top: "-9999px",
+          left: "-9999px",
+          whiteSpace: "pre",
+          fontSize: "14px",
+          fontFamily: "inherit",
+          padding: "5px 8px",
+          visibility: "hidden",
+        }}
+      >
+        {localValue || ""}
+      </span>
+    </>
+  );
+}
+
+
+
+  
+  // Pitch component
+export default function Pitch({ formation, players, updatePlayer, pitchHue }) {
+  const [editingPositions, setEditingPositions] = useState([]);
+const [filename, setFilename] = useState(formation);
+const lastFormationRef = useRef(formation);
+const layout = FormationLayouts[formation];
+const pitchRef = useRef(null);
+
+const [positions, setPositions] = useState(FormationLayouts[formation] || []);
+const [isDragging, setIsDragging] = useState(false);
+const draggedPos = useRef(null);
+const dragOffset = useRef({ x: 0, y: 0 });
+const mouseDownPos = useRef({ x: 0, y: 0 });
+const dragStarted = useRef(false);
+
+const toggleEditing = (pos) => {
+  setEditingPositions((prev) =>
+    prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos]
+  );
+};
+
+useEffect(() => {
+  if (filename === lastFormationRef.current) {
+    setFilename(formation);
+  }
+  lastFormationRef.current = formation;
+}, [formation]);
+
+useEffect(() => {
+  setPositions(FormationLayouts[formation] || []);
+}, [formation]);
+
+const dragThreshold = 5; // pixels
+
+const editingPositionsAtDragStart = useRef([]);
+
+const handleMouseDown = (pos) => (e) => {
+  e.preventDefault();
+  draggedPos.current = pos;
+  setIsDragging(false);
+  dragStarted.current = false;
+  mouseDownPos.current = { x: e.clientX, y: e.clientY };
+
+    editingPositionsAtDragStart.current = [...editingPositions];
+
+    // Calculate drag offset for smooth dragging
+    const playerPos = positions.find((p) => p.pos === pos);
+    if (playerPos && pitchRef.current) {
+      const pitchRect = pitchRef.current.getBoundingClientRect();
+      dragOffset.current = {
+        x: e.clientX - (pitchRect.left + playerPos.x * (pitchRect.width / 7)),
+        y: e.clientY - (pitchRect.top + playerPos.y * (pitchRect.height / 7)),
+      };
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (!draggedPos.current || !pitchRef.current) return;
+
+    const dx = e.clientX - (mouseDownPos.current?.x || 0);
+    const dy = e.clientY - (mouseDownPos.current?.y || 0);
+
+    if (!dragStarted.current && Math.sqrt(dx * dx + dy * dy) > dragThreshold) {
+      setIsDragging(true);
+      dragStarted.current = true;
+      // Also hide editing while dragging
+      //setEditingPositions((prev) => prev.filter((p) => p !== draggedPos.current));
+    }
+
+    if (!isDragging) return;
+
+    const pitchRect = pitchRef.current.getBoundingClientRect();
+
+    const relativeX = (e.clientX - pitchRect.left - dragOffset.current.x) / (pitchRect.width / 7);
+    const relativeY = (e.clientY - pitchRect.top - dragOffset.current.y) / (pitchRect.height / 7);
+
+    const newX = Math.min(Math.max(relativeX, 0), 6);
+    const newY = Math.min(Math.max(relativeY, 0), 6);
+
+    setPositions((prevPositions) =>
+      prevPositions.map((p) =>
+        p.pos === draggedPos.current ? { ...p, x: newX, y: newY } : p
+      )
+    );
+  };
+
+  const handleGlobalMouseUp = (e) => {
+    if (!draggedPos.current || !mouseDownPos.current) return;
+
+    const dx = e.clientX - mouseDownPos.current.x;
+    const dy = e.clientY - mouseDownPos.current.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < dragThreshold) {
+      // treat as click -> toggle editing
+      toggleEditing(draggedPos.current);
+    }
+
+    draggedPos.current = null;
+    setIsDragging(false);
+    mouseDownPos.current = null;
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleGlobalMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleGlobalMouseUp);
+    };
+  }, [isDragging, positions]);
+
+    const handleResetPlayers = () => {
+    setPositions(FormationLayouts[formation] || []);
+    layout.forEach(({ pos }) => updatePlayer(pos, ""));
+    setEditingPositions([]);
+  };
+
+
+
+
+  // Export handler
+   const exportPitchAsPNG = () => {
+    if (!pitchRef.current) return;
+    let safeFilename = filename.trim();
+    if (!safeFilename.toLowerCase().endsWith(".png")) {
+      safeFilename += ".jpg";
+    }
+
+    html2canvas(pitchRef.current, { backgroundColor: null }).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = safeFilename;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  };
+
+  return (
+    <>
+      <div
+        id="pitch"
+        ref={pitchRef}
+        className="relative pitch-container"
+        style={{
+          backgroundImage: `url(${pitchPng})`,
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          width: "900px",
+          height: "705px",
+          margin: "5px auto 0 auto",
+          boxShadow: "0 8px 15px rgba(0, 0, 0, 0.5)",
+          position: "relative",
+          cursor: isDragging ? "grabbing" : "default",
+          filter: `hue-rotate(${pitchHue}deg)`,
+        }}
+      >
+{positions.map(({ pos, x, y }) => {
+  const playerName = players[pos] || "";
+
+  return (
+    <React.Fragment key={pos}>
+      <div
+        className="pitch-cell absolute"
+        style={{
+          left: `${x * 125}px`,
+          top: `${y * 100}px`,
+          width: "56px",
+          height: "56px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "50%",
+          background: "#282828",
+          border: "1px solid black",
+          cursor: "pointer",
+          userSelect: "none",
+          color: "white",
+          textAlign: "center",
+          position: "absolute",
+          fontSize: "18px",
+        }}
+        onMouseDown={handleMouseDown(pos)}
+      >
+        {pos}
+      </div>
+
+{editingPositions.includes(pos) && (
+  <EditablePlayerInput
+    key={pos}
+    pos={pos}
+    x={x}
+    y={y}
+    playerName={playerName}
+    updatePlayer={updatePlayer}
+    draggedPos={draggedPos}
+    isDragging={isDragging}
+    onMouseUp={handleGlobalMouseUp}
+  />
+)}
+    </React.Fragment>
+  );
+})}
+
+      </div>
+
+      {/* Input box to edit export filename */}
+<div
+  className="export-controls"
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "10px",
+    marginTop: "10px",
+  }}
+>
+  <button
+    style={{
+      padding: "6px 10px",
+      fontSize: "16px",
+      borderRadius: "6px",
+      border: "1px solid #ccc",
+      backgroundColor: "#444",
+      color: "white",
+      pointerEvents: "auto",
+      marginRight: "335px", 
+    }}
+    onClick={handleResetPlayers}
+  >
+    Reset
+  </button>
+
+  <label
+    htmlFor="filename-input"
+    style={{ color: "white", marginRight: "10px", whiteSpace: "nowrap" }}
+  >
+    Filename:
+  </label>
+  <input
+    id="filename-input"
+    type="text"
+    value={filename}
+    onChange={(e) => setFilename(e.target.value)}
+    placeholder="Enter filename"
+    style={{
+      padding: "6px 10px",
+      fontSize: "16px",
+      borderRadius: "6px",
+      border: "1px solid #ccc",
+      width: "200px",
+      textAlign: "left",
+      color: "white",
+      backgroundColor: "#444",
+    }}
+  />
+  <button
+    onClick={exportPitchAsPNG}
+    className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md transition"
+  >
+    Export Pitch as PNG
+  </button>
+</div>
+    </>
+  );
+  
+}
