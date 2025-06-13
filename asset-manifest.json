@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/FootballLineupBuilder/static/css/main.e17ef492.css",
+    "main.js": "/FootballLineupBuilder/static/js/main.ae4017df.js",
+    "static/js/453.ac07a453.chunk.js": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js",
+    "static/media/pitch.png": "/FootballLineupBuilder/static/media/pitch.51d0e74c0acefb68540e.png",
+    "index.html": "/FootballLineupBuilder/index.html",
+    "main.e17ef492.css.map": "/FootballLineupBuilder/static/css/main.e17ef492.css.map",
+    "main.ae4017df.js.map": "/FootballLineupBuilder/static/js/main.ae4017df.js.map",
+    "453.ac07a453.chunk.js.map": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e17ef492.css",
+    "static/js/main.ae4017df.js"
+  ]
+}
