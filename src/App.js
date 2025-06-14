@@ -28,15 +28,22 @@ function App() {
 
       // Handler for Enter key press in input
   const handleSearchKeyDown = (e) => {
-    if (e.key === "Enter") {
-      const clubName = searchQuery.trim();
-      const color = teamColors[clubName];
-      const club = searchQuery.trim();
-       if (color) {
-      setTeamColor(color);
-      setClubName(club); // Save club name here
+  if (e.key === "Enter") {
+    const clubNameInput = searchQuery.trim();
+
+    if (clubNameInput === "") {
+      // User cleared the input and pressed Enter
+      setTeamColor("#282828");   // Reset to default color
+      setClubName("");           // Clear club name
     } else {
-      alert("Team not found");
+      // User entered a club name
+      const color = teamColors[clubNameInput];
+      if (color) {
+        setTeamColor(color);
+        setClubName(clubNameInput);
+      } else {
+        alert("Team not found");
+      }
     }
   }
 };
@@ -197,39 +204,61 @@ function App() {
           >
  <h3>Search Club Squad</h3>
 
-          <input
-            type="text"
-            placeholder="Enter club name..."
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "10px",
-              borderRadius: "4px",
-              border: "1px solid #444",
-              backgroundColor: "#333",
-              color: "white",
-            }}
-            value={searchQuery}
-            onChange={handleSearchChange}
-            onKeyDown={handleSearchKeyDown}
-          />
+    <input
+      type="text"
+      placeholder="Enter club name..."
+      style={{
+        width: "100%",
+        padding: "10px",
+        marginTop: "10px",
+        borderRadius: "4px",
+        border: "1px solid #444",
+        backgroundColor: "#333",
+        color: "white",
+      }}
+      value={searchQuery}
+      onChange={handleSearchChange}
+      onKeyDown={handleSearchKeyDown}
+    />
 
-            <button
-              style={{
-                marginTop: "20px",
-                padding: "6px 12px",
-                backgroundColor: "#444",
-                border: "none",
-                color: "white",
-                cursor: "pointer",
-                borderRadius: "4px",
-              }}
-              onClick={() => setShowSquadSearch(false)}
-            >
-              Close
-            </button>
-          </div>
-        )}
+    {/* Buttons container with flex layout */}
+    {/* Buttons container with flex layout */}
+<div style={{ display: "flex", marginTop: "20px", justifyContent: "center", gap: "50px" }}>
+  <button
+    style={{
+      padding: "6px 12px",
+      backgroundColor: "#666",
+      border: "none",
+      color: "white",
+      cursor: "pointer",
+      borderRadius: "4px",
+      flexShrink: 0,
+    }}
+    onClick={() => {
+      setSearchQuery("");
+      setTeamColor("#282828"); // Reset to default
+      setClubName("");
+    }}
+  >
+    Clear
+  </button>
+
+  <button
+    style={{
+      padding: "6px 12px",
+      backgroundColor: "#444",
+      border: "none",
+      color: "white",
+      cursor: "pointer",
+      borderRadius: "4px",
+    }}
+    onClick={() => setShowSquadSearch(false)}
+  >
+    Close
+  </button>
+</div>
+  </div>
+)}
       </div>
     </DndProvider>
   );
