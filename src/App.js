@@ -10,8 +10,6 @@ import teamColors from "./teamColors";
 function App() {
   const [formation, setFormation] = useState("4-4-2(2)");
   const [players, setPlayers] = useState({});
-  
-  const [pitchHue, setPitchHue] = useState(0);
 
   const [showSquadSearch, setShowSquadSearch] = useState(false);
   const [showPitchOptions, setShowPitchOptions] = useState(false);
@@ -22,6 +20,11 @@ function App() {
 
   const updatePlayer = (pos, value) => setPlayers(prev => ({ ...prev, [pos]: value }));
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
+
+  const [pitchStyle, setPitchStyle] = useState("normal"); // "normal" or "simple"
+
+  const [pitchHue, setPitchHue] = useState("#008A2B");
+
 
       // Handler for Enter key press in input
   const handleSearchKeyDown = (e) => {
@@ -66,7 +69,7 @@ function App() {
                 fontSize: "18px",
                 borderRadius: "4px",
                 cursor: "pointer",
-                backgroundColor: teamColor,   // <--- add this
+                backgroundColor: teamColor,
               }}
             >
   {showPitchOptions ? "Hide Pitch Options" : "Show Pitch Options"}
@@ -80,7 +83,7 @@ function App() {
                 fontSize: "18px",
                 borderRadius: "4px",
                 cursor: "pointer",
-                backgroundColor: teamColor,   // <--- add this
+                backgroundColor: teamColor,
               }}
             >
               Search Club Squad
@@ -95,7 +98,8 @@ function App() {
           updatePlayer={updatePlayer}
           pitchHue={pitchHue}
           teamColor={teamColor} 
-          clubName={clubName} // Pass clubName
+          clubName={clubName}
+          pitchStyle={pitchStyle}
         />
 
         {/* Sidebar for Pitch Options */}
@@ -115,39 +119,63 @@ function App() {
               overflowY: "auto",
             }}
           >
-            <h3>Pitch Options</h3>
+            <h3 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "15px" }}>
+           Pitch Options
+           </h3>
 
-            <label
-              htmlFor="hueRange"
-              style={{ display: "block", margin: "20px 0 10px" }}
-            >
-              Hue Rotation: {pitchHue}°
-            </label>
+<label htmlFor="pitchColor" style={{ display: "block", margin: "20px 0 10px" }}>
+  Pitch Color:
+</label>
 
-            <input
-              id="hueRange"
-              type="range"
-              min="0"
-              max="360"
-              value={pitchHue}
-              onChange={(e) => setPitchHue(Number(e.target.value))}
-              style={{ width: "100%" }}
-            />
+<input
+  id="pitchColor"
+  type="color" 
+  value={pitchHue} 
+  onChange={(e) => setPitchHue(e.target.value)} 
+  style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
+/>
 
-            <button
-              style={{
-                marginTop: "20px",
-                padding: "6px 12px",
-                backgroundColor: "#444",
-                border: "none",
-                color: "white",
-                cursor: "pointer",
-                borderRadius: "4px",
-              }}
-              onClick={() => setShowPitchOptions(false)}
-            >
-              Close
-            </button>
+<h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
+<div style={{ marginTop: "10px" }}>
+  <label>
+    <input
+      type="radio"
+      name="pitchStyle"
+      value="normal"
+      checked={pitchStyle === "normal"}
+      onChange={() => setPitchStyle("normal")}
+      style={{ marginRight: "8px" }}
+    />
+    Normal Pitch
+  </label>
+  <br />
+  <label>
+    <input
+      type="radio"
+      name="pitchStyle"
+      value="simple"
+      checked={pitchStyle === "simple"}
+      onChange={() => setPitchStyle("simple")}
+      style={{ marginRight: "8px" }}
+    />
+    Simple Pitch
+  </label>
+</div> {/* ← You were missing this! */}
+
+<button
+  style={{
+    marginTop: "20px",
+    padding: "6px 12px",
+    backgroundColor: "#444",
+    border: "none",
+    color: "white",
+    cursor: "pointer",
+    borderRadius: "4px",
+  }}
+  onClick={() => setShowPitchOptions(false)}
+>
+  Close
+</button>
           </div>
         )}
  {/* Search Club Squad Sidebar (Right Side) */}

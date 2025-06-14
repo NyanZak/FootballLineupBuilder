@@ -1,10 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import FormationLayouts from './FormationLayouts';
 import "./Pitch.css";
-import pitchPng from "../assets/pitch.png";
+import normalpitchPng from "../assets/normalpitch.png";
+import simplepitchPng from "../assets/simplepitch.png";
 import html2canvas from "html2canvas"; 
 
 import { rgbToHsl, hslToRgb } from "./colorUtils";
+
+// helper to convert hex to rgb
+function hexToRgb(hex) {
+  const bigint = parseInt(hex.slice(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return [r, g, b];
+}
+
+// convert rgb to hue in degrees [0-360]
+function rgbToHue(r, g, b) {
+  const [h, , ] = rgbToHsl(r, g, b);
+  return h * 360;
+}
 
 function EditablePlayerInput({
   pos,
@@ -122,7 +138,7 @@ return (
 
   
   // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName}) {
+export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle}) {
   const [editingPositions, setEditingPositions] = useState([]);
 const [filename, setFilename] = useState(formation);
 const lastFormationRef = useRef(formation);
@@ -137,6 +153,25 @@ const mouseDownPos = useRef({ x: 0, y: 0 });
 const dragStarted = useRef(false);
 
 const [processedPitch, setProcessedPitch] = useState(null);
+
+const getBaseHueFromPitchImage = () => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const img = new Image();
+  img.src = pitchStyle === "normal" ? normalpitchPng : simplepitchPng;
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    // Sample pixel roughly center of the pitch
+    const imageData = ctx.getImageData(img.width / 2, img.height / 2, 1, 1);
+    const [r, g, b] = imageData.data; // r,g,b,a
+    const baseHue = rgbToHue(r, g, b);
+    console.log("Base pitch hue:", baseHue);
+  };
+};
+
+getBaseHueFromPitchImage();
 
 function rotateHue(image, degrees, callback) {
   const canvas = document.createElement("canvas");
@@ -165,9 +200,26 @@ function rotateHue(image, degrees, callback) {
 
 useEffect(() => {
   const img = new Image();
-  img.src = pitchPng;
-  rotateHue(img, pitchHue, setProcessedPitch);
-}, [pitchHue]);
+
+  img.onload = () => {
+    const [r, g, b] = hexToRgb(pitchHue);
+    const targetHue = rgbToHue(r, g, b);
+
+    // hardcode or get baseHue from step 1; e.g., 120 for green pitch
+    const baseHue = 138; // adjust this to the actual base pitch hue
+
+    const hueDegrees = targetHue - baseHue;
+
+    rotateHue(img, hueDegrees, setProcessedPitch);
+  };
+
+  const src = pitchStyle === "normal" ? normalpitchPng : simplepitchPng;
+  if (typeof src === "string" && (src.startsWith("http") || src.startsWith("//"))) {
+    img.crossOrigin = "anonymous";
+  }
+
+  img.src = src;
+}, [pitchHue, pitchStyle]);
 
 
 const toggleEditing = (pos) => {
@@ -306,7 +358,7 @@ const handleMouseDown = (pos) => (e) => {
         ref={pitchRef}
         className="relative pitch-container"
         style={{
-        backgroundImage: `url(${processedPitch || pitchPng})`,
+          backgroundImage: `url(${processedPitch})`,
           backgroundSize: "100% 100%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -420,7 +472,7 @@ const handleMouseDown = (pos) => (e) => {
   <button
     onClick={exportPitchAsPNG}
     style={{
-      backgroundColor: teamColor,  // <--- add this
+      backgroundColor: teamColor,
     }}
     className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md transition"
   >
