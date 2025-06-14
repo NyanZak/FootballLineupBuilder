@@ -122,7 +122,7 @@ return (
 
   
   // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue }) {
+export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName}) {
   const [editingPositions, setEditingPositions] = useState([]);
 const [filename, setFilename] = useState(formation);
 const lastFormationRef = useRef(formation);
@@ -177,11 +177,17 @@ const toggleEditing = (pos) => {
 };
 
 useEffect(() => {
-  if (filename === lastFormationRef.current) {
-    setFilename(formation);
+  // Only auto-update filename if user hasn't manually changed it
+  // i.e. only if filename was based on lastFormationRef.current
+  if (filename === (lastFormationRef.current + (clubName ? ` - ${clubName.trim()}` : "")) || filename === lastFormationRef.current) {
+    if (clubName && clubName.trim() !== "") {
+      setFilename(`${formation} - ${clubName.trim()}`);
+    } else {
+      setFilename(formation);
+    }
   }
-  lastFormationRef.current = formation;
-}, [formation]);
+  lastFormationRef.current = formation; // track last formation, NOT filename
+}, [formation, clubName]);
 
 useEffect(() => {
   setPositions(FormationLayouts[formation] || []);
@@ -300,7 +306,7 @@ const handleMouseDown = (pos) => (e) => {
         ref={pitchRef}
         className="relative pitch-container"
         style={{
-          backgroundImage: `url(${processedPitch || pitchPng})`,
+        backgroundImage: `url(${processedPitch || pitchPng})`,
           backgroundSize: "100% 100%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -328,7 +334,7 @@ const handleMouseDown = (pos) => (e) => {
           alignItems: "center",
           justifyContent: "center",
           borderRadius: "50%",
-          background: "#282828",
+          background: teamColor || "#282828",  // <-- use the teamColor here
           border: "1px solid black",
           cursor: "pointer",
           userSelect: "none",
@@ -413,6 +419,9 @@ const handleMouseDown = (pos) => (e) => {
   />
   <button
     onClick={exportPitchAsPNG}
+    style={{
+      backgroundColor: teamColor,  // <--- add this
+    }}
     className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md transition"
   >
     Export Pitch as PNG
