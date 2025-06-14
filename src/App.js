@@ -141,6 +141,22 @@ function App() {
   onChange={(e) => setPitchHue(e.target.value)} 
   style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
 />
+<button
+  style={{
+    marginTop: "10px",
+    padding: "6px 12px",
+    backgroundColor: "#555",
+    border: "none",
+    color: "white",
+    cursor: "pointer",
+    borderRadius: "4px",
+    width: "100%",
+  }}
+  onClick={() => setPitchHue("#008A2B")}
+>
+  Reset Pitch Color
+</button>
+
 
 <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
 <div style={{ marginTop: "10px" }}>
