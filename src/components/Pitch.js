@@ -135,11 +135,8 @@ return (
   );
 }
 
-
-
-  
   // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle}) {
+export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain,}) {
   const [editingPositions, setEditingPositions] = useState([]);
 const [filename, setFilename] = useState(formation);
 const lastFormationRef = useRef(formation);
@@ -407,6 +404,29 @@ const handleMouseDown = (pos) => (e) => {
         onMouseDown={handleMouseDown(pos)}
       >
         {pos}
+{/* Add Captain Badge */}
+        {pos === captain && (
+          <div
+            style={{
+              position: "absolute",
+              bottom: "4px",
+              right: "-5px",
+              backgroundColor: "#FFD700",
+              color: "#000",
+              borderRadius: "50%",
+              width: "18px",
+              height: "18px",
+              fontSize: "12px",
+              fontWeight: "bold",
+              lineHeight: "18px",
+              textAlign: "center",
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+          >
+            C
+          </div>
+        )}
       </div>
 
 {editingPositions.includes(pos) && (
@@ -490,5 +510,4 @@ const handleMouseDown = (pos) => (e) => {
 </div>
     </>
   );
-  
 }

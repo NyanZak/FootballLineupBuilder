@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Pitch from "./components/Pitch";
 import FormationSelector from "./components/FormationSelector";
+import FormationLayouts from "./components/FormationLayouts";
 import "./App.css";
 import headerImg from "./assets/header.png";
 import { DndProvider } from "react-dnd";
@@ -10,6 +11,7 @@ import teamColors from "./teamColors";
 function App() {
   const [formation, setFormation] = useState("4-4-2(2)");
   const [players, setPlayers] = useState({});
+  const [captain, setCaptain] = useState(null);
 
   const [showSquadSearch, setShowSquadSearch] = useState(false);
   const [showPitchOptions, setShowPitchOptions] = useState(false);
@@ -107,6 +109,8 @@ function App() {
           teamColor={teamColor} 
           clubName={clubName}
           pitchStyle={pitchStyle}
+          captain={captain}
+          setCaptain={setCaptain}
         />
 
         {/* Sidebar for Pitch Options */}
@@ -284,6 +288,35 @@ function App() {
     Close
   </button>
 </div>
+{/* Add captain dropdown */}
+        <div style={{ margin: "20px auto", textAlign: "center" }}>
+          <label htmlFor="captain-select" style={{ marginRight: "10px" }}>
+            Select Captain:
+          </label>
+          <select
+            id="captain-select"
+            value={captain || ""}
+            onChange={(e) => setCaptain(e.target.value || null)}
+            style={{
+              padding: "6px 12px",
+              fontSize: "16px",
+              borderRadius: "6px",
+              border: "1px solid #ccc",
+              backgroundColor: "#282828",
+              color: "white",
+              minWidth: "120px",
+              cursor: "pointer",
+            }}
+          >
+            <option value="">-- None --</option>
+            {FormationLayouts[formation]?.map(({ pos }) => (
+              <option key={pos} value={pos}>
+                {pos}
+              </option>
+            ))}
+          </select>
+        </div>
+
   </div>
 )}
       </div>
