@@ -4,6 +4,8 @@ import "./Pitch.css";
 import pitchPng from "../assets/pitch.png";
 import html2canvas from "html2canvas"; 
 
+import { rgbToHsl, hslToRgb } from "./colorUtils";
+
 function EditablePlayerInput({
   pos,
   x,
@@ -133,6 +135,40 @@ const draggedPos = useRef(null);
 const dragOffset = useRef({ x: 0, y: 0 });
 const mouseDownPos = useRef({ x: 0, y: 0 });
 const dragStarted = useRef(false);
+
+const [processedPitch, setProcessedPitch] = useState(null);
+
+function rotateHue(image, degrees, callback) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  image.crossOrigin = "anonymous";
+  image.onload = () => {
+    canvas.width = image.width;
+    canvas.height = image.height;
+    ctx.drawImage(image, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const [r, g, b] = [data[i], data[i + 1], data[i + 2]];
+      let [h, s, l] = rgbToHsl(r, g, b);
+      h = (h + degrees / 360) % 1;
+      const [newR, newG, newB] = hslToRgb(h, s, l);
+      [data[i], data[i + 1], data[i + 2]] = [newR, newG, newB];
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    callback(canvas.toDataURL());
+  };
+}
+
+useEffect(() => {
+  const img = new Image();
+  img.src = pitchPng;
+  rotateHue(img, pitchHue, setProcessedPitch);
+}, [pitchHue]);
+
 
 const toggleEditing = (pos) => {
   setEditingPositions((prev) =>
@@ -264,7 +300,7 @@ const handleMouseDown = (pos) => (e) => {
         ref={pitchRef}
         className="relative pitch-container"
         style={{
-          backgroundImage: `url(${pitchPng})`,
+          backgroundImage: `url(${processedPitch || pitchPng})`,
           backgroundSize: "100% 100%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -274,7 +310,6 @@ const handleMouseDown = (pos) => (e) => {
           boxShadow: "0 8px 15px rgba(0, 0, 0, 0.5)",
           position: "relative",
           cursor: isDragging ? "grabbing" : "default",
-          filter: `hue-rotate(${pitchHue}deg)`,
         }}
       >
 {positions.map(({ pos, x, y }) => {
