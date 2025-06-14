@@ -160,6 +160,18 @@ function App() {
     <input
       type="radio"
       name="pitchStyle"
+      value="striped"
+      checked={pitchStyle === "striped"}
+      onChange={() => setPitchStyle("striped")}
+      style={{ marginRight: "8px" }}
+    />
+    Striped Pitch
+  </label>
+  <br />
+  <label>
+    <input
+      type="radio"
+      name="pitchStyle"
       value="simple"
       checked={pitchStyle === "simple"}
       onChange={() => setPitchStyle("simple")}
@@ -167,8 +179,7 @@ function App() {
     />
     Simple Pitch
   </label>
-</div> {/* ← You were missing this! */}
-
+</div> 
 <button
   style={{
     marginTop: "20px",

@@ -3,6 +3,7 @@ import FormationLayouts from './FormationLayouts';
 import "./Pitch.css";
 import normalpitchPng from "../assets/normalpitch.png";
 import simplepitchPng from "../assets/simplepitch.png";
+import stripedpitchPng from "../assets/stripedpitch.png";
 import html2canvas from "html2canvas"; 
 
 import { rgbToHsl, hslToRgb } from "./colorUtils";
@@ -158,8 +159,12 @@ const getBaseHueFromPitchImage = () => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   const img = new Image();
-  img.src = pitchStyle === "normal" ? normalpitchPng : simplepitchPng;
-  img.onload = () => {
+img.src =
+  pitchStyle === "normal"
+    ? normalpitchPng
+    : pitchStyle === "striped"
+    ? stripedpitchPng
+    : simplepitchPng;  img.onload = () => {
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
@@ -213,8 +218,12 @@ useEffect(() => {
     rotateHue(img, hueDegrees, setProcessedPitch);
   };
 
-  const src = pitchStyle === "normal" ? normalpitchPng : simplepitchPng;
-  if (typeof src === "string" && (src.startsWith("http") || src.startsWith("//"))) {
+const src =
+  pitchStyle === "normal"
+    ? normalpitchPng
+    : pitchStyle === "striped"
+    ? stripedpitchPng
+    : simplepitchPng;  if (typeof src === "string" && (src.startsWith("http") || src.startsWith("//"))) {
     img.crossOrigin = "anonymous";
   }
 
