@@ -30,6 +30,8 @@ function App() {
 
   const [lineColor, setPitchLineHue] = useState("#CCCCCC"); 
 
+  const [numPlayers, setNumPlayers] = useState(11);
+
       // Handler for Enter key press in input
 const handleSearchKeyDown = (e) => {
   if (e.key === "Enter") {
@@ -112,6 +114,7 @@ if (color) {
         captain={captain}
         setCaptain={setCaptain}
         showFilename={showFilename}
+        numPlayers={numPlayers}
       />
 
       {/* Sidebar for Pitch Options */}
@@ -228,6 +231,21 @@ if (color) {
               Simple Pitch
             </label>
           </div>
+
+          <div style={{ textAlign: "center", marginBottom: "20px", marginTop: "20px" }}>
+  <label style={{ color: "white", marginRight: "8px", fontWeight: "bold", }}>
+    Players on pitch:
+  </label>
+  <select
+    value={numPlayers}
+    onChange={(e) => setNumPlayers(Number(e.target.value))}
+    style={{ padding: "6px 10px", fontSize: "16px", borderRadius: "6px", backgroundColor: "#282828" }}
+  >
+    <option value={11}>11</option>
+    <option value={7}>7</option>
+    <option value={5}>5</option>
+  </select>
+</div>
 
           <div style={{ marginTop: "20px" }}>
             <button

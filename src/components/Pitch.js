@@ -139,7 +139,7 @@ return (
 }
 
   // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain, showFilename, lineColor }) {
+export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain, showFilename, lineColor, numPlayers }) {
   const [editingPositions, setEditingPositions] = useState([]);
 const [filename, setFilename] = useState(formation);
 const lastFormationRef = useRef(formation);
@@ -279,8 +279,15 @@ useEffect(() => {
 }, [formation, clubName]);
 
 useEffect(() => {
-  setPositions(FormationLayouts[formation] || []);
-}, [formation]);
+  let formationKey;
+
+  if (numPlayers === 11) formationKey = formation;
+  else if (numPlayers === 7) formationKey = "7-player";
+  else if (numPlayers === 5) formationKey = "5-player";
+  else formationKey = formation;  // fallback to formation if numPlayers unexpected
+
+  setPositions(FormationLayouts[formationKey] || []);
+}, [numPlayers, formation]);
 
 const dragThreshold = 5; // pixels
 
