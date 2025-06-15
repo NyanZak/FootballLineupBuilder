@@ -28,6 +28,8 @@ function App() {
 
   const [showFilename, setShowFilename] = useState(true);
 
+  const [lineColor, setPitchLineHue] = useState("#FFFFFF"); 
+
       // Handler for Enter key press in input
 const handleSearchKeyDown = (e) => {
   if (e.key === "Enter") {
@@ -103,6 +105,7 @@ if (color) {
         players={players}
         updatePlayer={updatePlayer}
         pitchHue={pitchHue}
+        lineColor={lineColor} 
         teamColor={teamColor}
         clubName={clubName}
         pitchStyle={pitchStyle}
@@ -158,6 +161,34 @@ if (color) {
           >
             Reset Pitch Color
           </button>
+
+          <label htmlFor="lineColor" style={{ display: "block", margin: "20px 0 10px" }}>
+  Pitch Line Color:
+</label>
+
+<input
+  id="lineColor"
+  type="color"
+  value={lineColor}
+  onChange={(e) => setPitchLineHue(e.target.value)}
+  style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
+/>
+
+<button
+  style={{
+    marginTop: "10px",
+    padding: "6px 12px",
+    backgroundColor: "#555",
+    border: "none",
+    color: "white",
+    cursor: "pointer",
+    borderRadius: "4px",
+    width: "100%",
+  }}
+  onClick={() => setPitchLineHue("#FFFFFF")}  // reset to white
+>
+  Reset Line Color
+</button>
 
           <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
           <div style={{ marginTop: "10px" }}>

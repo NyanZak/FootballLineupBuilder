@@ -137,7 +137,7 @@ return (
 }
 
   // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain, showFilename,}) {
+export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain, showFilename, lineColor }) {
   const [editingPositions, setEditingPositions] = useState([]);
 const [filename, setFilename] = useState(formation);
 const lastFormationRef = useRef(formation);
@@ -178,9 +178,10 @@ img.src =
 
 getBaseHueFromPitchImage();
 
-function rotateHue(image, degrees, callback) {
+function recolorPitchLines(image, grassHueDegrees, lineColorHex, callback) {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
+
   image.crossOrigin = "anonymous";
   image.onload = () => {
     canvas.width = image.width;
@@ -190,16 +191,33 @@ function rotateHue(image, degrees, callback) {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
-    for (let i = 0; i < data.length; i += 4) {
-      const [r, g, b] = [data[i], data[i + 1], data[i + 2]];
-      let [h, s, l] = rgbToHsl(r, g, b);
-      h = (h + degrees / 360) % 1;
-      const [newR, newG, newB] = hslToRgb(h, s, l);
-      [data[i], data[i + 1], data[i + 2]] = [newR, newG, newB];
-    }
+    const [targetR, targetG, targetB] = hexToRgb(lineColorHex);
 
-    ctx.putImageData(imageData, 0, 0);
-    callback(canvas.toDataURL());
+for (let i = 0; i < data.length; i += 4) {
+  const [r, g, b, a] = [data[i], data[i + 1], data[i + 2], data[i + 3]];
+
+  // Improved line detection
+  const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+  const maxDiff = Math.max(Math.abs(r - g), Math.abs(r - b), Math.abs(g - b));
+  const isLinePixel = brightness > 180 && maxDiff < 50 && a > 100;
+
+  if (isLinePixel) {
+    // Recolor pitch lines
+    data[i] = targetR;
+    data[i + 1] = targetG;
+    data[i + 2] = targetB;
+  } else {
+    // Recolor pitch grass
+    let [h, s, l] = rgbToHsl(r, g, b);
+    h = (h + grassHueDegrees / 360) % 1;
+    const [newR, newG, newB] = hslToRgb(h, s, l);
+    data[i] = newR;
+    data[i + 1] = newG;
+    data[i + 2] = newB;
+  }
+}
+ctx.putImageData(imageData, 0, 0);
+callback(canvas.toDataURL());
   };
 }
 
@@ -209,27 +227,25 @@ useEffect(() => {
   img.onload = () => {
     const [r, g, b] = hexToRgb(pitchHue);
     const targetHue = rgbToHue(r, g, b);
-
-    // hardcode or get baseHue from step 1; e.g., 120 for green pitch
-    const baseHue = 138; // adjust this to the actual base pitch hue
-
+    const baseHue = 138; // original green hue in the pitch image
     const hueDegrees = targetHue - baseHue;
 
-    rotateHue(img, hueDegrees, setProcessedPitch);
+    recolorPitchLines(img, hueDegrees, lineColor || "#ffffff", setProcessedPitch);
   };
 
-const src =
-  pitchStyle === "normal"
-    ? normalpitchPng
-    : pitchStyle === "striped"
-    ? stripedpitchPng
-    : simplepitchPng;  if (typeof src === "string" && (src.startsWith("http") || src.startsWith("//"))) {
+  const src =
+    pitchStyle === "normal"
+      ? normalpitchPng
+      : pitchStyle === "striped"
+      ? stripedpitchPng
+      : simplepitchPng;
+
+  if (typeof src === "string" && (src.startsWith("http") || src.startsWith("//"))) {
     img.crossOrigin = "anonymous";
   }
 
   img.src = src;
-}, [pitchHue, pitchStyle]);
-
+}, [pitchHue, lineColor, pitchStyle]);
 
 const toggleEditing = (pos) => {
   setEditingPositions((prev) =>
