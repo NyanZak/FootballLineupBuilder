@@ -67,6 +67,7 @@ A web app to create football (soccer) lineups with ease. Built in React, this to
 ```bash
 npm install
 npm start
+```
 
 Runs the app in development mode.  
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.  
