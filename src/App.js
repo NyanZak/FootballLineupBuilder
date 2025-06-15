@@ -6,7 +6,7 @@ import "./App.css";
 import headerImg from "./assets/header.png";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import teamColors from "./teamColors";
+import { getTeamColor } from "./teamColors";
 
 function App() {
   const [formation, setFormation] = useState("4-4-2(2)");
@@ -29,34 +29,32 @@ function App() {
 
 
       // Handler for Enter key press in input
-  const handleSearchKeyDown = (e) => {
+const handleSearchKeyDown = (e) => {
   if (e.key === "Enter") {
-    const clubNameInput = searchQuery.trim();
+    const clubNameInput = searchQuery.trim().toLowerCase();  // <--- lowercase here
 
     if (clubNameInput === "") {
       // User cleared the input and pressed Enter
       setTeamColor("#282828");   // Reset to default color
       setClubName("");           // Clear club name
     } else {
-      // User entered a club name
-      const color = teamColors[clubNameInput];
-      if (color) {
-        setTeamColor(color);
-        setClubName(clubNameInput);
-      } else {
-        alert("Team not found");
-      }
+const color = getTeamColor(clubNameInput);
+if (color) {
+  setTeamColor(color);
+  setClubName(searchQuery.trim());
+} else {
+  alert("Team not found");
+}
     }
   }
 };
-
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
         <h1 className="text-3xl font-bold h-full mt-2 text-center">Lineup Builder</h1>
 
         <div
-          className="relative flex flex-col justify-center items-center mt-12 rounded-lg max-w-[900px] mx-auto"
+          className="relative flex flex-col justify-center items-center mt-6 rounded-lg max-w-[900px] mx-auto"
           style={{
             backgroundImage: `url(${headerImg})`,
             backgroundSize: "cover",

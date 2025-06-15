@@ -1,39 +1,46 @@
-const teamColors = {
-    "Arsenal": "#EF0107",
-    "Aston Villa": "#95BFE5",
-    "Villa": "95BFE5",
-    "Bournemouth": "#DA291C",
-    "Brentford": "#D20000",
-    "Brighton & Hove Albion": "#0057B8",
-    "Brighton": "#0057B8",
-    "Burnley": "#6C1D45",
-    "Chelsea": "#034694",
-    "Crystal Palace": "#1B458F",
-    "Palace": "#1B458F",
-    "Everton": "#003399",
-    "Fulham": "#000000",
-    "Leeds United": "#FFCD00",
-    "Leeds": "#FFCD00",
-    "Liverpool": "#C8102E",
-    "Manchester City": "#6CABDD",
-    "Man City": "#6CABDD",
-    "Manchester United": "#DA291C",
-    "Man Utd": "#DA291C",
-    "Newcastle United": "#241F20",
-    "Newcastle Utd": "#241F20",
-    "Nottingham Forest": "#DD0000",
-    "Forest": "#DD0000",
-    "Sunderland": "#E03A3E", 
-    "Tottenham Hotspur": "#132257",        
-    "Tottenham": "#132257", 
-    "Spurs": "#132257",
-    "West Ham United": "#7A263A", 
-    "West Ham": "#7A263A", 
-    "Wolverhampton Wanderers": "#FDB913", 
-    "Wolves": "#FDB913", 
-
-  "Real Madrid": "#FEBE10",
-  // Add your teams and their colors here
+const primaryTeamColors = {
+  arsenal: "#EF0107",
+  "aston villa": "#95BFE5",
+  bournemouth: "#DA291C",
+  brentford: "#D20000",
+  "brighton & hove albion": "#0057B8",
+  burnley: "#6C1D45",
+  chelsea: "#034694",
+  "crystal palace": "#1B458F",
+  everton: "#003399",
+  fulham: "#000000",
+  hornchurch: "#B91C1C",
+  "leeds united": "#FFCD00",
+  liverpool: "#C8102E",
+  "manchester city": "#6CABDD",
+  "manchester united": "#DA291C",
+  "newcastle united": "#241F20",
+  "nottingham forest": "#DD0000",
+  sunderland: "#E03A3E",
+  "tottenham hotspur": "#132257",
+  "west ham united": "#7A263A",
+  "wolverhampton wanderers": "#FDB913",
+  "real madrid": "#FEBE10",
 };
 
-export default teamColors;
+const teamAliases = {
+  villa: "aston villa",
+  brighton: "brighton & hove albion",
+  palace: "crystal palace",
+  leeds: "leeds united",
+  "man city": "manchester city",
+  "man utd": "manchester united",
+  "newcastle utd": "newcastle united",
+  forest: "nottingham forest",
+  spurs: "tottenham hotspur",
+  "west ham": "west ham united",
+  wolves: "wolverhampton wanderers",
+};
+
+function getTeamColor(teamName) {
+  const lowerName = teamName.toLowerCase();
+  const primaryName = teamAliases[lowerName] || lowerName;
+  return primaryTeamColors[primaryName] || null;
+}
+
+export { getTeamColor };

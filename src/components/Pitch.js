@@ -31,6 +31,7 @@ function EditablePlayerInput({
   updatePlayer,
   draggedPos,
   isDragging,
+  filename,
   onMouseDown = () => {},
   onMouseUp = () => {},
 }){
@@ -152,6 +153,8 @@ const dragStarted = useRef(false);
 
 const [processedPitch, setProcessedPitch] = useState(null);
 
+const lastClubNameRef = useRef(clubName);
+
 const getBaseHueFromPitchImage = () => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -234,17 +237,27 @@ const toggleEditing = (pos) => {
   );
 };
 
+
+
 useEffect(() => {
-  // Only auto-update filename if user hasn't manually changed it
-  // i.e. only if filename was based on lastFormationRef.current
-  if (filename === (lastFormationRef.current + (clubName ? ` - ${clubName.trim()}` : "")) || filename === lastFormationRef.current) {
-    if (clubName && clubName.trim() !== "") {
-      setFilename(`${formation} - ${clubName.trim()}`);
-    } else {
-      setFilename(formation);
-    }
+  const expectedFilename = clubName && clubName.trim() !== ""
+    ? `${formation} - ${clubName.trim()}`
+    : formation;
+
+  const lastExpectedFilename = lastClubNameRef.current && lastClubNameRef.current.trim() !== ""
+    ? `${lastFormationRef.current} - ${lastClubNameRef.current.trim()}`
+    : lastFormationRef.current;
+
+  // Use case-insensitive comparison here:
+  if (
+    filename.toLowerCase() === lastExpectedFilename.toLowerCase() ||
+    filename.toLowerCase() === lastFormationRef.current.toLowerCase()
+  ) {
+    setFilename(expectedFilename);
   }
-  lastFormationRef.current = formation; // track last formation, NOT filename
+
+  lastFormationRef.current = formation;
+  lastClubNameRef.current = clubName;
 }, [formation, clubName]);
 
 useEffect(() => {
@@ -338,15 +351,12 @@ const handleMouseDown = (pos) => (e) => {
     setEditingPositions([]);
   };
 
-
-
-
   // Export handler
    const exportPitchAsPNG = () => {
     if (!pitchRef.current) return;
     let safeFilename = filename.trim();
     if (!safeFilename.toLowerCase().endsWith(".png")) {
-      safeFilename += ".jpg";
+      safeFilename += ".png";
     }
 
     html2canvas(pitchRef.current, { backgroundColor: null }).then((canvas) => {
@@ -376,6 +386,22 @@ const handleMouseDown = (pos) => (e) => {
           cursor: isDragging ? "grabbing" : "default",
         }}
       >
+                <div
+  style={{
+    position: "absolute",
+    bottom: "-1px",
+    left: "8px",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "14px",
+    textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
+    userSelect: "none",
+    pointerEvents: "none",
+  }}
+>
+  {filename}
+</div>
+      
 {positions.map(({ pos, x, y }) => {
   const playerName = players[pos] || "";
 
@@ -440,6 +466,7 @@ const handleMouseDown = (pos) => (e) => {
     draggedPos={draggedPos}
     isDragging={isDragging}
     onMouseUp={handleGlobalMouseUp}
+    filename={filename}
   />
 )}
     </React.Fragment>
