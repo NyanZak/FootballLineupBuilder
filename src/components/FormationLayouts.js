@@ -1,6 +1,6 @@
 const FormationLayouts = {
   "4-4-2(2)": [
-    { pos: "GK", x: 2.225, y: 6.6 },
+    { pos: "GK", x: 2.225, y: 6.6  },
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },

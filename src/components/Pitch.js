@@ -7,10 +7,9 @@ import stripedpitchPng from "../assets/stripedpitch.png";
 import html2canvas from "html2canvas"; 
 
 import { rgbToHsl, hslToRgb } from "./colorUtils";
-
 import teamLogos from "../teamLogos";
 
-// helper to convert hex to rgb
+// Helper to convert hex to rgb
 function hexToRgb(hex) {
   const bigint = parseInt(hex.slice(1), 16);
   const r = (bigint >> 16) & 255;
@@ -19,9 +18,9 @@ function hexToRgb(hex) {
   return [r, g, b];
 }
 
-// convert rgb to hue in degrees [0-360]
+// Convert rgb to hue in degrees [0-360]
 function rgbToHue(r, g, b) {
-  const [h, , ] = rgbToHsl(r, g, b);
+  const [h] = rgbToHsl(r, g, b);
   return h * 360;
 }
 
@@ -36,28 +35,27 @@ function EditablePlayerInput({
   filename,
   onMouseDown = () => {},
   onMouseUp = () => {},
-}){
+}) {
   const [localValue, setLocalValue] = useState(playerName);
   const [inputWidth, setInputWidth] = useState(60);
   const spanRef = useRef(null);
   const debounceTimeout = useRef(null);
+
   useEffect(() => {
     setLocalValue(playerName);
     setInputWidth(100);
   }, [playerName]);
 
-useEffect(() => {
-  const span = spanRef.current;
-  if (span) {
-    requestAnimationFrame(() => {
-      const width = Math.min(Math.max(span.offsetWidth + 20, 100), 240);
-      setInputWidth(width);
-    });
-  }
-}, [localValue]);
+  useEffect(() => {
+    if (spanRef.current) {
+      requestAnimationFrame(() => {
+        const width = Math.min(Math.max(spanRef.current.offsetWidth + 20, 100), 240);
+        setInputWidth(width);
+      });
+    }
+  }, [localValue]);
 
-
- const handleChange = (e) => {
+  const handleChange = (e) => {
     const val = e.target.value;
     setLocalValue(val);
     updatePlayer(pos, val);
@@ -70,15 +68,14 @@ useEffect(() => {
     }
 
     debounceTimeout.current = setTimeout(() => {
-      const span = spanRef.current;
-      if (span) {
-        const width = Math.min(Math.max(span.offsetWidth + 20, 40), 240);
+      if (spanRef.current) {
+        const width = Math.min(Math.max(spanRef.current.offsetWidth + 20, 40), 240);
         setInputWidth(width);
       }
     }, 1000);
   };
 
-return (
+   return (
     <>
       <div
         onMouseDown={onMouseDown}
@@ -114,7 +111,7 @@ return (
             boxSizing: "border-box",
             transition: "width 0.15s ease",
             lineHeight: "24px",
-            cursor: "text", // <- explicitly text cursor for input
+            cursor: "text",
           }}
         />
       </div>
@@ -138,24 +135,36 @@ return (
   );
 }
 
-  // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain, showFilename, lineColor, numPlayers }) {
+// Main Pitch component
+export default function Pitch({
+  formation,
+  players,
+  updatePlayer,
+  pitchHue,
+  teamColor,
+  clubName,
+  pitchStyle,
+  captain,
+  setCaptain,
+  showFilename,
+  lineColor,
+  numPlayers,
+}) {  
   const [editingPositions, setEditingPositions] = useState([]);
-const [filename, setFilename] = useState(formation);
-const lastFormationRef = useRef(formation);
-const layout = FormationLayouts[formation];
-const pitchRef = useRef(null);
+  const [filename, setFilename] = useState(formation);
+  const lastFormationRef = useRef(formation);
+  const lastClubNameRef = useRef(clubName);
+  const layout = FormationLayouts[formation];
+  const pitchRef = useRef(null);
 
-const [positions, setPositions] = useState(FormationLayouts[formation] || []);
-const [isDragging, setIsDragging] = useState(false);
-const draggedPos = useRef(null);
-const dragOffset = useRef({ x: 0, y: 0 });
-const mouseDownPos = useRef({ x: 0, y: 0 });
-const dragStarted = useRef(false);
+  const [positions, setPositions] = useState(FormationLayouts[formation] || []);
+  const [isDragging, setIsDragging] = useState(false);
+  const draggedPos = useRef(null);
+  const dragOffset = useRef({ x: 0, y: 0 });
+  const mouseDownPos = useRef({ x: 0, y: 0 });
+  const dragStarted = useRef(false);
 
 const [processedPitch, setProcessedPitch] = useState(null);
-
-const lastClubNameRef = useRef(clubName);
 
 const getBaseHueFromPitchImage = () => {
   const canvas = document.createElement("canvas");
@@ -289,7 +298,13 @@ useEffect(() => {
   setPositions(FormationLayouts[formationKey] || []);
 }, [numPlayers, formation]);
 
-const dragThreshold = 5; // pixels
+const PITCH_WIDTH = 4.45;
+const PITCH_LENGTH = 7.04;
+
+const dragThreshold = 5; // minimum pixels movement to start dragging
+
+
+
 
 const editingPositionsAtDragStart = useRef([]);
 
@@ -300,75 +315,83 @@ const handleMouseDown = (pos) => (e) => {
   dragStarted.current = false;
   mouseDownPos.current = { x: e.clientX, y: e.clientY };
 
-    editingPositionsAtDragStart.current = [...editingPositions];
-
-    // Calculate drag offset for smooth dragging
+  // Calculate drag offset so dragging feels smooth
+  if (pitchRef.current) {
+    const pitchRect = pitchRef.current.getBoundingClientRect();
     const playerPos = positions.find((p) => p.pos === pos);
-    if (playerPos && pitchRef.current) {
-      const pitchRect = pitchRef.current.getBoundingClientRect();
+
+    if (playerPos) {
+      // Calculate pixel position of player circle
+      const playerPixelX = pitchRect.left + (playerPos.x / PITCH_WIDTH) * pitchRect.width;
+      const playerPixelY = pitchRect.top + (playerPos.y / PITCH_LENGTH) * pitchRect.height;
+
       dragOffset.current = {
-        x: e.clientX - (pitchRect.left + playerPos.x * (pitchRect.width / 7)),
-        y: e.clientY - (pitchRect.top + playerPos.y * (pitchRect.height / 7)),
+        x: e.clientX - playerPixelX,
+        y: e.clientY - playerPixelY,
       };
     }
-  };
+  }
+};
 
-  const handleMouseMove = (e) => {
-    if (!draggedPos.current || !pitchRef.current) return;
+const handleMouseMove = (e) => {
+  if (!draggedPos.current || !mouseDownPos.current || !pitchRef.current) return;
 
-    const dx = e.clientX - (mouseDownPos.current?.x || 0);
-    const dy = e.clientY - (mouseDownPos.current?.y || 0);
+  const dx = e.clientX - mouseDownPos.current.x;
+  const dy = e.clientY - mouseDownPos.current.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (!dragStarted.current && Math.sqrt(dx * dx + dy * dy) > dragThreshold) {
-      setIsDragging(true);
+  if (!dragStarted.current) {
+    if (dist > dragThreshold) {
       dragStarted.current = true;
-      // Also hide editing while dragging
-      //setEditingPositions((prev) => prev.filter((p) => p !== draggedPos.current));
+      setIsDragging(true);
+    } else {
+      return; // don't update position if drag hasn't started yet
     }
+  }
 
-    if (!isDragging) return;
+ const pitchRect = pitchRef.current.getBoundingClientRect();
 
-    const pitchRect = pitchRef.current.getBoundingClientRect();
+  // Calculate relative x,y on pitch scaled 0-PITCH_WIDTH and 0-PITCH_LENGTH
+  const relativeX = (e.clientX - pitchRect.left - dragOffset.current.x) / pitchRect.width * PITCH_WIDTH;
+  const relativeY = (e.clientY - pitchRect.top - dragOffset.current.y) / pitchRect.height * PITCH_LENGTH;
 
-    const relativeX = (e.clientX - pitchRect.left - dragOffset.current.x) / (pitchRect.width / 7);
-    const relativeY = (e.clientY - pitchRect.top - dragOffset.current.y) / (pitchRect.height / 7);
+  // Clamp values within pitch boundaries
+  const clampedX = Math.min(Math.max(relativeX, 0), PITCH_WIDTH);
+  const clampedY = Math.min(Math.max(relativeY, 0), PITCH_LENGTH);
 
-    const newX = Math.min(Math.max(relativeX, 0.45), 6.3);
-    const newY = Math.min(Math.max(relativeY, 0), 7.25);
+  setPositions((prev) =>
+    prev.map((p) =>
+      p.pos === draggedPos.current ? { ...p, x: clampedX, y: clampedY } : p
+    )
+  );
+};
 
-    setPositions((prevPositions) =>
-      prevPositions.map((p) =>
-        p.pos === draggedPos.current ? { ...p, x: newX, y: newY } : p
-      )
-    );
+const handleGlobalMouseUp = (e) => {
+  if (!draggedPos.current || !mouseDownPos.current) return;
+
+  const dx = e.clientX - mouseDownPos.current.x;
+  const dy = e.clientY - mouseDownPos.current.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist < dragThreshold) {
+    // Treat as click -> toggle editing input for that position
+    toggleEditing(draggedPos.current);
+  }
+
+  draggedPos.current = null;
+  setIsDragging(false);
+  mouseDownPos.current = null;
+  dragStarted.current = false;
+};
+
+useEffect(() => {
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("mouseup", handleGlobalMouseUp);
+  return () => {
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseup", handleGlobalMouseUp);
   };
-
-  const handleGlobalMouseUp = (e) => {
-    if (!draggedPos.current || !mouseDownPos.current) return;
-
-    const dx = e.clientX - mouseDownPos.current.x;
-    const dy = e.clientY - mouseDownPos.current.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < dragThreshold) {
-      // treat as click -> toggle editing
-      toggleEditing(draggedPos.current);
-    }
-
-    draggedPos.current = null;
-    setIsDragging(false);
-    mouseDownPos.current = null;
-  };
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleGlobalMouseUp);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleGlobalMouseUp);
-    };
-  }, [isDragging, positions]);
+}, [positions]);
 
     const handleResetPlayers = () => {
     setPositions(FormationLayouts[formation] || []);

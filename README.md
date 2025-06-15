@@ -38,6 +38,7 @@ A web app to create football (soccer) lineups with ease. Built in React, this to
   - Striped  
   - Simple  
 
+- Choose between **11, 7, or 5 players.**  Player positions update automatically, and unused spots are hidden.
 - Toggle display of **filename label** shown on the bottom-left of the pitch.
 
 ---
