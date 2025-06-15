@@ -1,6 +1,6 @@
 const FormationLayouts = {
   "4-4-2(2)": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6 },
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -13,7 +13,7 @@ const FormationLayouts = {
     { pos: "CF2", x: 2.8, y: 1 },
   ],
   "4-4-2": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -26,7 +26,7 @@ const FormationLayouts = {
     { pos: "CF2", x: 2.8, y: 1 },
   ],
   "4-4-1-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -39,7 +39,7 @@ const FormationLayouts = {
     { pos: "CF", x: 2.225, y: 0.85 },
   ],
   "4-2-3-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -52,7 +52,7 @@ const FormationLayouts = {
     { pos: "CF", x: 2.225, y: 1 },
   ],
   "4-3-3": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -65,7 +65,7 @@ const FormationLayouts = {
     { pos: "RW", x: 4.05, y: 1 },
   ],
   "4-3-2-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -78,7 +78,7 @@ const FormationLayouts = {
     { pos: "CF", x: 2.225, y: 1 },
   ],
   "4-1-4-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -91,7 +91,7 @@ const FormationLayouts = {
     { pos: "CF", x: 2.225, y: 0.85 },
   ],
 "4-5-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },
     { pos: "CB1", x: 1.475, y: 5.865 },
     { pos: "CB2", x: 2.95, y: 5.865 },
@@ -104,7 +104,7 @@ const FormationLayouts = {
     { pos: "CF", x: 2.225, y: 0.85 },
 ],
 "5-4-1": [
-  { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
   { pos: "LWB", x: 0.3, y: 5.865 },
   { pos: "CB1", x: 1.27, y: 5.865 },
   { pos: "CB2", x: 2.225, y: 5.865 },
@@ -117,7 +117,7 @@ const FormationLayouts = {
   { pos: "CF", x: 2.225, y: 0.85 },
 ],
   "3-5-2": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "CB1", x: 1.27, y: 5.865 },
     { pos: "CB2", x: 2.225, y: 5.865 },
     { pos: "CB3", x: 3.175, y: 5.865 },
@@ -130,7 +130,7 @@ const FormationLayouts = {
     { pos: "CF2", x: 2.8, y: 1 },
   ],
   "3-4-3": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "CB1", x: 1.27, y: 5.865 },
     { pos: "CB2", x: 2.225, y: 5.865 },
     { pos: "CB3", x: 3.175, y: 5.865 },
@@ -143,7 +143,7 @@ const FormationLayouts = {
     { pos: "RW", x: 4.05, y: 1 },
   ],
   "3-4-2-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "CB1", x: 1.27, y: 5.865 },
     { pos: "CB2", x: 2.225, y: 5.865 },
     { pos: "CB3", x: 3.175, y: 5.865 },
@@ -156,7 +156,7 @@ const FormationLayouts = {
     { pos: "RW", x: 2.95, y: 2.125 },
   ],
   "3-4-1-2": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "CB1", x: 1.27, y: 5.865 },
     { pos: "CB2", x: 2.225, y: 5.865 },
     { pos: "CB3", x: 3.175, y: 5.865 },
@@ -169,7 +169,7 @@ const FormationLayouts = {
     { pos: "CF2", x: 2.95, y: 1 },
   ],
   "3-2-4-1": [
-    { pos: "GK", x: 2.225, y: 6.715 },
+    { pos: "GK", x: 2.225, y: 6.6},
     { pos: "CB1", x: 1.27, y: 5.865 },
     { pos: "CB2", x: 2.225, y: 5.865 },
     { pos: "CB3", x: 3.175, y: 5.865 },

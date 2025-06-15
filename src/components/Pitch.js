@@ -407,10 +407,10 @@ const handleMouseDown = (pos) => (e) => {
     style={{
       position: "absolute",
       bottom: "0px",
-      left: "5px",
+      left: "30px",
       color: "white",
       fontWeight: "bold",
-      fontSize: "16px",
+      fontSize: "18px",
       textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
       userSelect: "none",
       pointerEvents: "none",
