@@ -308,8 +308,8 @@ const handleMouseDown = (pos) => (e) => {
     const relativeX = (e.clientX - pitchRect.left - dragOffset.current.x) / (pitchRect.width / 7);
     const relativeY = (e.clientY - pitchRect.top - dragOffset.current.y) / (pitchRect.height / 7);
 
-    const newX = Math.min(Math.max(relativeX, 0), 6.75);
-    const newY = Math.min(Math.max(relativeY, 0), 6.75);
+    const newX = Math.min(Math.max(relativeX, 0.45), 6.3);
+    const newY = Math.min(Math.max(relativeY, 0), 7.25);
 
     setPositions((prevPositions) =>
       prevPositions.map((p) =>
@@ -375,12 +375,12 @@ const handleMouseDown = (pos) => (e) => {
         className="relative pitch-container"
         style={{
           backgroundImage: `url(${processedPitch})`,
-          backgroundSize: "100% 100%",
+          backgroundSize: "88% 102.5%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           width: "900px",
-          height: "730px",
-          margin: "5px auto 0 auto",
+          height: "775px",
+          margin: "2px auto 0 auto",
           boxShadow: "0 8px 15px rgba(0, 0, 0, 0.5)",
           position: "relative",
           cursor: isDragging ? "grabbing" : "default",
@@ -390,11 +390,11 @@ const handleMouseDown = (pos) => (e) => {
   <div
     style={{
       position: "absolute",
-      bottom: "-1px",
-      left: "8px",
+      bottom: "-3px",
+      left: "60px",
       color: "white",
       fontWeight: "bold",
-      fontSize: "18px",
+      fontSize: "16px",
       textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
       userSelect: "none",
       pointerEvents: "none",
@@ -497,7 +497,7 @@ const handleMouseDown = (pos) => (e) => {
       backgroundColor: "#444",
       color: "white",
       pointerEvents: "auto",
-      marginRight: "335px", 
+      marginRight: "235px", 
     }}
     onClick={handleResetPlayers}
   >

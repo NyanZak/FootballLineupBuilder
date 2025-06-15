@@ -16,7 +16,7 @@
 
 .formation-select {
   font-size: 18px;        /* Increase text size */
-  padding: 15px 15px;     /* Bigger clickable area and height */
+  padding: 8px 15px;     /* Bigger clickable area and height */
   width: 180px;           /* Wider dropdown */
   border-radius: 6px;
   border: 1px solid #ccc;

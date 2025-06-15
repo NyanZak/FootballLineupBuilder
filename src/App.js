@@ -51,20 +51,20 @@ if (color) {
  return (
   <DndProvider backend={HTML5Backend}>
     <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
-      <h1 className="text-3xl font-bold h-full mt-2 text-center">Lineup Builder</h1>
+      <h1 className="text-3xl font-bold h-full  text-center">Lineup Builder</h1>
 
       <div
-        className="relative flex flex-col justify-center items-center mt-6 rounded-lg max-w-[900px] mx-auto"
+        className="relative flex flex-col justify-center items-center mt-3 rounded-lg max-w-[900px] mx-auto"
         style={{
           backgroundImage: `url(${headerImg})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           boxShadow: "0 0 15px rgba(0,0,0,0.5)",
-          height: "75px",
+          height: "57.5px",
         }}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <label className="text-white font-semibold text-xl">Formation:</label>
           <FormationSelector setFormation={setFormation} />
 
