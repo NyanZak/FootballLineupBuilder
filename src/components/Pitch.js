@@ -83,8 +83,8 @@ return (
         onMouseUp={onMouseUp}
         style={{
           position: "absolute",
-          left: `${x * 125 + 30}px`,
-          top: `${y * 100 + 34}px`,
+          left: `${x * 125 + 25}px`,
+          top: `${y * 100 + 24}px`,
           transform: "translate(-50%, 80%)",
           cursor:
             draggedPos && draggedPos.current === pos && isDragging
@@ -101,7 +101,7 @@ return (
           style={{
             width: `${inputWidth}px`,
             padding: "1px 8px",
-            fontSize: "16px",
+            fontSize: "14px",
             borderRadius: "4px",
             border: "1px solid #ccc",
             outline: "none",
@@ -375,11 +375,11 @@ const handleMouseDown = (pos) => (e) => {
         className="relative pitch-container"
         style={{
           backgroundImage: `url(${processedPitch})`,
-          backgroundSize: "88% 102.5%",
+          backgroundSize: "100% 102.5%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          width: "900px",
-          height: "775px",
+          width: "600px",
+          height: "750px",
           margin: "2px auto 0 auto",
           boxShadow: "0 8px 15px rgba(0, 0, 0, 0.5)",
           position: "relative",
@@ -390,8 +390,8 @@ const handleMouseDown = (pos) => (e) => {
   <div
     style={{
       position: "absolute",
-      bottom: "-3px",
-      left: "60px",
+      bottom: "0px",
+      left: "5px",
       color: "white",
       fontWeight: "bold",
       fontSize: "16px",
@@ -414,8 +414,8 @@ const handleMouseDown = (pos) => (e) => {
         style={{
           left: `${x * 125}px`,
           top: `${y * 100}px`,
-          width: "56px",
-          height: "56px",
+          width: "45px",
+          height: "45px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -437,16 +437,16 @@ const handleMouseDown = (pos) => (e) => {
           <div
             style={{
               position: "absolute",
-              bottom: "4px",
-              right: "-5px",
+              bottom: "0px",
+              right: "-10px",
               backgroundColor: "#FFD700",
               color: "#000",
               borderRadius: "50%",
-              width: "18px",
-              height: "18px",
+              width: "16px",
+              height: "16px",
               fontSize: "12px",
               fontWeight: "bold",
-              lineHeight: "18px",
+              lineHeight: "16px",
               textAlign: "center",
               pointerEvents: "none",
               userSelect: "none",
@@ -497,7 +497,7 @@ const handleMouseDown = (pos) => (e) => {
       backgroundColor: "#444",
       color: "white",
       pointerEvents: "auto",
-      marginRight: "235px", 
+      marginRight: "80px", 
     }}
     onClick={handleResetPlayers}
   >
@@ -534,7 +534,7 @@ const handleMouseDown = (pos) => (e) => {
     }}
     className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md transition"
   >
-    Export Pitch as PNG
+    Export as PNG
   </button>
 </div>
     </>

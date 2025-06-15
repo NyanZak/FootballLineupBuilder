@@ -61,7 +61,7 @@ if (color) {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           boxShadow: "0 0 15px rgba(0,0,0,0.5)",
-          height: "57.5px",
+          height: "60px",
         }}
       >
         <div className="flex items-center gap-5">
