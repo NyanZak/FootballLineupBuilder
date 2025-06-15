@@ -137,7 +137,7 @@ return (
 }
 
   // Pitch component
-export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain,}) {
+export default function Pitch({ formation, players, updatePlayer, pitchHue, teamColor, clubName, pitchStyle, captain, setCaptain, showFilename,}) {
   const [editingPositions, setEditingPositions] = useState([]);
 const [filename, setFilename] = useState(formation);
 const lastFormationRef = useRef(formation);
@@ -386,21 +386,23 @@ const handleMouseDown = (pos) => (e) => {
           cursor: isDragging ? "grabbing" : "default",
         }}
       >
-                <div
-  style={{
-    position: "absolute",
-    bottom: "-1px",
-    left: "8px",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "14px",
-    textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
-    userSelect: "none",
-    pointerEvents: "none",
-  }}
->
-  {filename}
-</div>
+ {showFilename && (
+  <div
+    style={{
+      position: "absolute",
+      bottom: "-1px",
+      left: "8px",
+      color: "white",
+      fontWeight: "bold",
+      fontSize: "14px",
+      textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
+      userSelect: "none",
+      pointerEvents: "none",
+    }}
+  >
+    {filename}
+  </div>
+)}
       
 {positions.map(({ pos, x, y }) => {
   const playerName = players[pos] || "";
