@@ -1,18 +1,39 @@
 {
   "files": {
     "main.css": "/FootballLineupBuilder/static/css/main.713b5bb1.css",
-    "main.js": "/FootballLineupBuilder/static/js/main.b76f94e3.js",
+    "main.js": "/FootballLineupBuilder/static/js/main.3207ef3b.js",
     "static/js/453.ac07a453.chunk.js": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js",
+    "static/media/Hornchurch.png": "/FootballLineupBuilder/static/media/Hornchurch.e2553f35249cb5a725eb.png",
+    "static/media/Liverpool.png": "/FootballLineupBuilder/static/media/Liverpool.aa8482ba5da620703fcf.png",
+    "static/media/Newcastle.png": "/FootballLineupBuilder/static/media/Newcastle.62ae374c576aa00483b1.png",
+    "static/media/Everton.png": "/FootballLineupBuilder/static/media/Everton.c23044dacce8783f3d97.png",
+    "static/media/Chelsea.png": "/FootballLineupBuilder/static/media/Chelsea.9b3ba2c70bdef69b7a8c.png",
+    "static/media/Man City.png": "/FootballLineupBuilder/static/media/Man City.5bd65d26781d153675fa.png",
+    "static/media/Sunderland.png": "/FootballLineupBuilder/static/media/Sunderland.3b54b9692c1fac11d262.png",
+    "static/media/Man Utd.png": "/FootballLineupBuilder/static/media/Man Utd.1514034fcd9d002ce7c5.png",
+    "static/media/Aston Villa.png": "/FootballLineupBuilder/static/media/Aston Villa.88df50e04613d8e1bdd9.png",
+    "static/media/Crystal Palace.png": "/FootballLineupBuilder/static/media/Crystal Palace.1b232c856a3e987b048e.png",
+    "static/media/Brentford.png": "/FootballLineupBuilder/static/media/Brentford.c4cac0e7af07b97bf4cc.png",
+    "static/media/Burnley.png": "/FootballLineupBuilder/static/media/Burnley.5d6bc58e1ac9414d3a3c.png",
+    "static/media/Arsenal.png": "/FootballLineupBuilder/static/media/Arsenal.4527ba8e7f0aca5bb4d7.png",
+    "static/media/Leeds Utd.png": "/FootballLineupBuilder/static/media/Leeds Utd.c23d635d2d918164c353.png",
+    "static/media/Bournemouth.png": "/FootballLineupBuilder/static/media/Bournemouth.a33794a51ce08a0d639a.png",
+    "static/media/Brighton.png": "/FootballLineupBuilder/static/media/Brighton.bc898d7fe93a5314cedf.png",
+    "static/media/West Ham.png": "/FootballLineupBuilder/static/media/West Ham.5aeef0f8f638c2c526fb.png",
     "static/media/stripedpitch.png": "/FootballLineupBuilder/static/media/stripedpitch.9a8a67ef4942831df94f.png",
+    "static/media/Fulham.png": "/FootballLineupBuilder/static/media/Fulham.ef0d1ea1b3dea7d1212c.png",
     "static/media/normalpitch.png": "/FootballLineupBuilder/static/media/normalpitch.f9951f80867fab52de5c.png",
     "static/media/simplepitch.png": "/FootballLineupBuilder/static/media/simplepitch.f6b9fce20d591635956d.png",
+    "static/media/Forest.png": "/FootballLineupBuilder/static/media/Forest.42ae5f6cc2b5f220ac79.png",
+    "static/media/Wolves.png": "/FootballLineupBuilder/static/media/Wolves.867b265af97592945b95.png",
+    "static/media/Spurs.png": "/FootballLineupBuilder/static/media/Spurs.3ff3a59b4c35c68ee1cc.png",
     "index.html": "/FootballLineupBuilder/index.html",
     "main.713b5bb1.css.map": "/FootballLineupBuilder/static/css/main.713b5bb1.css.map",
-    "main.b76f94e3.js.map": "/FootballLineupBuilder/static/js/main.b76f94e3.js.map",
+    "main.3207ef3b.js.map": "/FootballLineupBuilder/static/js/main.3207ef3b.js.map",
     "453.ac07a453.chunk.js.map": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.713b5bb1.css",
-    "static/js/main.b76f94e3.js"
+    "static/js/main.3207ef3b.js"
   ]
 }
