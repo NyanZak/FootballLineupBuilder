@@ -230,7 +230,7 @@ useEffect(() => {
     const baseHue = 138; // original green hue in the pitch image
     const hueDegrees = targetHue - baseHue;
 
-    recolorPitchLines(img, hueDegrees, lineColor || "#ffffff", setProcessedPitch);
+    recolorPitchLines(img, hueDegrees, lineColor || "#CCCCCC", setProcessedPitch);
   };
 
   const src =

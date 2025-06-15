@@ -28,7 +28,7 @@ function App() {
 
   const [showFilename, setShowFilename] = useState(true);
 
-  const [lineColor, setPitchLineHue] = useState("#FFFFFF"); 
+  const [lineColor, setPitchLineHue] = useState("#CCCCCC"); 
 
       // Handler for Enter key press in input
 const handleSearchKeyDown = (e) => {
@@ -185,7 +185,7 @@ if (color) {
     borderRadius: "4px",
     width: "100%",
   }}
-  onClick={() => setPitchLineHue("#FFFFFF")}  // reset to white
+  onClick={() => setPitchLineHue("#CCCCCC")}  // reset to white
 >
   Reset Line Color
 </button>
