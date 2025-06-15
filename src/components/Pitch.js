@@ -43,13 +43,13 @@ function EditablePlayerInput({
 
   useEffect(() => {
     setLocalValue(playerName);
-    setInputWidth(100);
+    setInputWidth(80);
   }, [playerName]);
 
   useEffect(() => {
     if (spanRef.current) {
       requestAnimationFrame(() => {
-        const width = Math.min(Math.max(spanRef.current.offsetWidth + 20, 100), 240);
+        const width = Math.min(Math.max(spanRef.current.offsetWidth + 20, 80), 240);
         setInputWidth(width);
       });
     }
@@ -63,7 +63,7 @@ function EditablePlayerInput({
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
     if (val.trim() === "") {
-      setInputWidth(100);
+      setInputWidth(80);
       return;
     }
 
@@ -83,7 +83,7 @@ function EditablePlayerInput({
         style={{
           position: "absolute",
           left: `${x * 125 + 25}px`,
-          top: `${y * 100 + 24}px`,
+          top: `${y * 100 + 25}px`,
           transform: "translate(-50%, 80%)",
           cursor:
             draggedPos && draggedPos.current === pos && isDragging
@@ -100,7 +100,7 @@ function EditablePlayerInput({
           style={{
             width: `${inputWidth}px`,
             padding: "1px 8px",
-            fontSize: "14px",
+            fontSize: "13px",
             borderRadius: "4px",
             border: "1px solid #ccc",
             outline: "none",
@@ -110,7 +110,7 @@ function EditablePlayerInput({
             textAlign: "center",
             boxSizing: "border-box",
             transition: "width 0.15s ease",
-            lineHeight: "24px",
+            lineHeight: "22px",
             cursor: "text",
           }}
         />

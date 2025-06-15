@@ -55,7 +55,7 @@ if (color) {
  return (
   <DndProvider backend={HTML5Backend}>
     <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
-      <h1 className="text-3xl font-bold h-full  text-center">Lineup Builder</h1>
+      <h1 className="text-3xl font-bold h-full  text-center">Nyan's Football Lineup Builder</h1>
 
       <div
         className="relative flex flex-col justify-center items-center mt-3 rounded-lg max-w-[900px] mx-auto"
