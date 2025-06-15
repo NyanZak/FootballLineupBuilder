@@ -308,8 +308,8 @@ const handleMouseDown = (pos) => (e) => {
     const relativeX = (e.clientX - pitchRect.left - dragOffset.current.x) / (pitchRect.width / 7);
     const relativeY = (e.clientY - pitchRect.top - dragOffset.current.y) / (pitchRect.height / 7);
 
-    const newX = Math.min(Math.max(relativeX, 0), 6);
-    const newY = Math.min(Math.max(relativeY, 0), 6);
+    const newX = Math.min(Math.max(relativeX, 0), 6.75);
+    const newY = Math.min(Math.max(relativeY, 0), 6.75);
 
     setPositions((prevPositions) =>
       prevPositions.map((p) =>
@@ -379,7 +379,7 @@ const handleMouseDown = (pos) => (e) => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           width: "900px",
-          height: "705px",
+          height: "730px",
           margin: "5px auto 0 auto",
           boxShadow: "0 8px 15px rgba(0, 0, 0, 0.5)",
           position: "relative",
@@ -394,7 +394,7 @@ const handleMouseDown = (pos) => (e) => {
       left: "8px",
       color: "white",
       fontWeight: "bold",
-      fontSize: "14px",
+      fontSize: "18px",
       textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
       userSelect: "none",
       pointerEvents: "none",
