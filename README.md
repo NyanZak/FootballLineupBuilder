@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# Nyan's Football Lineup Builder ⚽
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web app to create football (soccer) lineups with ease. Built in React, this tool lets you drag players around a customizable pitch, switch formations, add names, and export your team sheet as an image.
 
-## Available Scripts
+## 🌐 Live Demo
 
-In the project directory, you can run:
+[Click here to try it out!](https://nyanzak.github.io/FootballLineupBuilder/)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🔧 Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🧩 Interactive Lineup Editor
+- Default 4-4-2(2) formation with 11 players.
+- Click a player position to type a name — textbox resizes automatically.
+- Click again to hide the textbox.
+- Move players freely anywhere on the pitch.
 
-### `npm test`
+### 🔁 Reset Button
+- Clears all player name inputs.
+- Resets player positions to default locations based on the selected formation.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 📁 Export Options
+- Set a custom **filename** before export. Default name includes the current formation and selected club name (if applicable).
+- **Export as PNG** — downloads a high-quality image of the current pitch layout to your default Downloads folder.
+
+---
+
+## 🎛️ UI Controls
+
+### 🧠 Formation Selector
+- Choose from a list of popular and commonly used football formations.
+
+### 🎨 Pitch Appearance Settings
+- Change **pitch color** and **line color** using a color picker.
+- Toggle **pitch background styles**:  
+  - Normal  
+  - Striped  
+  - Simple  
+
+- Toggle display of **filename label** shown on the bottom-left of the pitch.
+
+---
+
+## 🔍 Club Integration
+
+### 🏟️ Club Squad Search
+- Enter a Premier League club name to:
+  - Apply club colors to player position circles and selected UI elements.
+  - Add the club badge next to the pitch filename.
+  
+### 🧢 Captain Selection
+- Assign a player as captain by selecting a position.
+- Adds a small yellow “C” circle to represent the armband.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js and npm installed.  
+  [Download Node.js](https://nodejs.org/)
+
+### Install & Run
+
+```bash
+npm install
+npm start
+
+Runs the app in development mode.  
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.  
+The page reloads automatically when you make edits.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `build` folder.  
+Bundles React in production mode and optimizes for best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
+- `/src` - React components, pitch UI, and lineup logic  
+- `/public` - Static assets like images and fonts  
+- `/data` - Sample squads and formation presets (if applicable)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [React Documentation](https://reactjs.org/) — for learning React basics and advanced concepts  
+- [Create React App Documentation](https://create-react-app.dev/docs/getting-started/) — for tooling details  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Feel free to open issues or submit pull requests for new features, bug fixes, or lineup presets!
