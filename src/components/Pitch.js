@@ -207,20 +207,41 @@ function recolorPitchLines(image, grassHueDegrees, lineColorHex, callback) {
 for (let i = 0; i < data.length; i += 4) {
   const [r, g, b, a] = [data[i], data[i + 1], data[i + 2], data[i + 3]];
 
-  // Improved line detection
+  // Detect pitch lines (white-ish pixels)
   const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
   const maxDiff = Math.max(Math.abs(r - g), Math.abs(r - b), Math.abs(g - b));
   const isLinePixel = brightness > 180 && maxDiff < 50 && a > 100;
 
   if (isLinePixel) {
-    // Recolor pitch lines
+    // Recolor pitch lines with target line color
     data[i] = targetR;
     data[i + 1] = targetG;
     data[i + 2] = targetB;
   } else {
-    // Recolor pitch grass
+    // Recolor pitch grass pixels
+
     let [h, s, l] = rgbToHsl(r, g, b);
-    h = (h + grassHueDegrees / 360) % 1;
+
+    // If pitchHue is close to green, shift hue normally:
+    // Otherwise, if pitchHue is near white/grey/black, set s and l accordingly:
+
+    if (pitchHue === "#ffffff") { // White pitch
+      s = 0;
+      l = 0.95;
+    } else if (pitchHue === "#cccccc") { // Light grey pitch
+      s = 0;
+      l = 0.7;
+    } else if (pitchHue === "#000000") { // Black pitch
+      s = 0;
+      l = 0.15;
+    } else {
+      // Normal hue shift
+      const baseHue = 138 / 360; // your green hue in [0..1]
+      const targetHue = rgbToHue(...hexToRgb(pitchHue)) / 360;
+      h = (h + targetHue - baseHue + 1) % 1;
+      // Keep original saturation and lightness
+    }
+
     const [newR, newG, newB] = hslToRgb(h, s, l);
     data[i] = newR;
     data[i + 1] = newG;
