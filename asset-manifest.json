@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/FootballLineupBuilder/static/css/main.313ac8be.css",
-    "main.js": "/FootballLineupBuilder/static/js/main.2c123cdc.js",
+    "main.css": "/FootballLineupBuilder/static/css/main.7ac037e9.css",
+    "main.js": "/FootballLineupBuilder/static/js/main.b40246f2.js",
     "static/js/453.ac07a453.chunk.js": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js",
     "static/media/normalpitch.png": "/FootballLineupBuilder/static/media/normalpitch.d0fd9688e985a516bf72.png",
     "static/media/stripedpitch.png": "/FootballLineupBuilder/static/media/stripedpitch.02e7c863197a3542699f.png",
     "static/media/simplepitch.png": "/FootballLineupBuilder/static/media/simplepitch.8ae40a13346a7af8ebd9.png",
     "index.html": "/FootballLineupBuilder/index.html",
-    "main.313ac8be.css.map": "/FootballLineupBuilder/static/css/main.313ac8be.css.map",
-    "main.2c123cdc.js.map": "/FootballLineupBuilder/static/js/main.2c123cdc.js.map",
+    "main.7ac037e9.css.map": "/FootballLineupBuilder/static/css/main.7ac037e9.css.map",
+    "main.b40246f2.js.map": "/FootballLineupBuilder/static/js/main.b40246f2.js.map",
     "453.ac07a453.chunk.js.map": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.313ac8be.css",
-    "static/js/main.2c123cdc.js"
+    "static/css/main.7ac037e9.css",
+    "static/js/main.b40246f2.js"
   ]
 }
