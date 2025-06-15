@@ -8,6 +8,8 @@ import html2canvas from "html2canvas";
 
 import { rgbToHsl, hslToRgb } from "./colorUtils";
 
+import teamLogos from "../teamLogos";
+
 // helper to convert hex to rgb
 function hexToRgb(hex) {
   const bigint = parseInt(hex.slice(1), 16);
@@ -402,12 +404,12 @@ const handleMouseDown = (pos) => (e) => {
           cursor: isDragging ? "grabbing" : "default",
         }}
       >
- {showFilename && (
+{showFilename && (
   <div
     style={{
       position: "absolute",
       bottom: "0px",
-      left: "30px",
+      left: "28px",
       color: "white",
       fontWeight: "bold",
       fontSize: "18px",
@@ -416,9 +418,21 @@ const handleMouseDown = (pos) => (e) => {
       pointerEvents: "none",
     }}
   >
-    {filename}
+    {clubName && teamLogos[clubName.toLowerCase()] ? (
+      <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+        <img
+          src={teamLogos[clubName.toLowerCase()]}
+          alt={`${clubName} badge`}
+          style={{ height: "24px", width: "24px", objectFit: "contain" }}
+        />
+        <span>{filename}</span>
+      </div>
+    ) : (
+      <span>{filename}</span>
+    )}
   </div>
 )}
+
       
 {positions.map(({ pos, x, y }) => {
   const playerName = players[pos] || "";
