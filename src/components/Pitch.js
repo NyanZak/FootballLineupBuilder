@@ -33,6 +33,7 @@ function EditablePlayerInput({
   draggedPos,
   isDragging,
   filename,
+  teamColor,
   onMouseDown = () => {},
   onMouseUp = () => {},
 }) {
@@ -105,7 +106,7 @@ function EditablePlayerInput({
             border: "1px solid #ccc",
             outline: "none",
             zIndex: 10,
-            backgroundColor: "#282828",
+            backgroundColor: teamColor || "#282828", //
             color: "white",
             textAlign: "center",
             boxSizing: "border-box",
@@ -149,6 +150,7 @@ export default function Pitch({
   showFilename,
   lineColor,
   numPlayers,
+  showSubs={showSubs},
 }) {  
   const [editingPositions, setEditingPositions] = useState([]);
   const [filename, setFilename] = useState(formation);
@@ -539,19 +541,78 @@ useEffect(() => {
       </div>
 
 {editingPositions.includes(pos) && (
-  <EditablePlayerInput
-    key={pos}
-    pos={pos}
-    x={x}
-    y={y}
-    playerName={playerName}
-    updatePlayer={updatePlayer}
-    draggedPos={draggedPos}
-    isDragging={isDragging}
-    onMouseUp={handleGlobalMouseUp}
-    filename={filename}
-  />
-)}
+  <>
+    <EditablePlayerInput
+      key={pos}
+      pos={pos}
+      x={x}
+      y={y}
+      playerName={playerName}
+      updatePlayer={updatePlayer}
+      draggedPos={draggedPos}
+      isDragging={isDragging}
+      onMouseUp={handleGlobalMouseUp}
+      filename={filename}
+      teamColor={teamColor}
+    />
+
+    {showSubs && (
+      <>
+        {/* Sub input box above the small circle */}
+        <div
+          style={{
+            position: "absolute",
+            left: `${x * 125 + 15}px`,
+            top: `${y * 100 - 35}px`,
+            transform: "translate(-50%, 80%)",
+            zIndex: 9,
+          }}
+        >
+          <input
+            type="text"
+            placeholder={`${pos} Sub`}
+            style={{
+              width: "60px",
+              justifyContent: "center",
+              borderRadius: "4px",
+              backgroundColor: "rgba(28, 28, 28, 0.7)",
+              border: "1px solid #ccc",
+              color: "white",
+              textAlign: "center",
+              position: "absolute",
+              fontSize: "12px",
+              padding: "1px 4px",
+            }}
+          />
+        </div>
+
+        {/* "S" circle */}
+        <div
+          style={{
+            position: "absolute",
+            left: `${x * 125 + 45}px`,
+            top: `${y * 100 - 30}px`,
+            width: "24px",
+            height: "24px",
+            borderRadius: "50%",
+            backgroundColor: "#858383",
+            color: "#fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "13px",
+            fontWeight: "bold",
+            border: "1px solid black",
+            transform: "translate(-50%, 80%)",
+            zIndex: 8,
+          }}
+        >
+          S
+        </div>
+      </>
+    )}
+   </> 
+   )}
     </React.Fragment>
   );
 })}

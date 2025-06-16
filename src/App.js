@@ -20,237 +20,277 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [clubName, setClubName] = useState("");
 
-  const updatePlayer = (pos, value) => setPlayers(prev => ({ ...prev, [pos]: value }));
+  const updatePlayer = (pos, value) => setPlayers((prev) => ({ ...prev, [pos]: value }));
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
+  const [numPlayers, setNumPlayers] = useState(11);
 
   const [pitchStyle, setPitchStyle] = useState("normal"); // "normal" or "simple"
   const [pitchHue, setPitchHue] = useState("#008A2B");
+  const [lineColor, setPitchLineHue] = useState("#CCCCCC");
 
   const [showFilename, setShowFilename] = useState(true);
 
-  const [lineColor, setPitchLineHue] = useState("#CCCCCC"); 
+  // New state for subs toggle
+  const [showSubs, setShowSubs] = useState(false);
 
-  const [numPlayers, setNumPlayers] = useState(11);
+  // Handler for Enter key press in input
+  const handleSearchKeyDown = (e) => {
+    if (e.key === "Enter") {
+      const clubNameInput = searchQuery.trim().toLowerCase();
 
-      // Handler for Enter key press in input
-const handleSearchKeyDown = (e) => {
-  if (e.key === "Enter") {
-    const clubNameInput = searchQuery.trim().toLowerCase();  // <--- lowercase here
-
-    if (clubNameInput === "") {
-      // User cleared the input and pressed Enter
-      setTeamColor("#282828");   // Reset to default color
-      setClubName("");           // Clear club name
-    } else {
-const color = getTeamColor(clubNameInput);
-if (color) {
-  setTeamColor(color);
-  setClubName(searchQuery.trim());
-} else {
-  alert("Team not found");
-}
+      if (clubNameInput === "") {
+        setTeamColor("#282828");
+        setClubName("");
+      } else {
+        const color = getTeamColor(clubNameInput);
+        if (color) {
+          setTeamColor(color);
+          setClubName(searchQuery.trim());
+        } else {
+          alert("Team not found");
+        }
+      }
     }
-  }
-};
- return (
-  <DndProvider backend={HTML5Backend}>
-    <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
-      <h1 className="text-3xl font-bold h-full  text-center">Nyan's Football Lineup Builder</h1>
+  };
 
-      <div
-        className="relative flex flex-col justify-center items-center mt-3 rounded-lg max-w-[900px] mx-auto"
-        style={{
-          backgroundImage: `url(${headerImg})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          boxShadow: "0 0 15px rgba(0,0,0,0.5)",
-          height: "60px",
-        }}
-      >
-        <div className="flex items-center gap-5">
-          <label className="text-white font-semibold text-xl">Formation:</label>
-          <FormationSelector setFormation={setFormation} />
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
+        <h1 className="text-3xl font-bold h-full text-center">
+          Nyan's Football Lineup Builder
+        </h1>
 
-          {/* Pitch Options Button */}
-          <button
-            onClick={() => setShowPitchOptions((prev) => !prev)}
-            style={{
-              padding: "6px 12px",
-              fontSize: "18px",
-              borderRadius: "4px",
-              cursor: "pointer",
-              backgroundColor: teamColor,
-            }}
-          >
-            {showPitchOptions ? "Hide Pitch Options" : "Show Pitch Options"}
-          </button>
-
-          {/* Search Club Squad Button */}
-          <button
-            onClick={() => setShowSquadSearch((prev) => !prev)}
-            style={{
-              padding: "6px 12px",
-              fontSize: "18px",
-              borderRadius: "4px",
-              cursor: "pointer",
-              backgroundColor: teamColor,
-            }}
-          >
-            Search Club Squad
-          </button>
-        </div>
-      </div>
-
-      <Pitch
-        formation={formation}
-        players={players}
-        updatePlayer={updatePlayer}
-        pitchHue={pitchHue}
-        lineColor={lineColor} 
-        teamColor={teamColor}
-        clubName={clubName}
-        pitchStyle={pitchStyle}
-        captain={captain}
-        setCaptain={setCaptain}
-        showFilename={showFilename}
-        numPlayers={numPlayers}
-      />
-
-      {/* Sidebar for Pitch Options */}
-      {showPitchOptions && (
         <div
+          className="relative flex flex-col justify-center items-center mt-3 rounded-lg max-w-[900px] mx-auto"
           style={{
-            position: "fixed",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: "300px",
-            backgroundColor: "#222",
-            padding: "20px",
-            color: "white",
-            boxShadow: "2px 0 5px rgba(0,0,0,0.7)",
-            zIndex: 1000,
-            overflowY: "auto",
+            backgroundImage: `url(${headerImg})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            boxShadow: "0 0 15px rgba(0,0,0,0.5)",
+            height: "60px",
           }}
         >
-          <h3 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "15px" }}>
-            Pitch Options
-          </h3>
+          <div className="flex items-center gap-5">
+            <label className="text-white font-semibold text-xl">Formation:</label>
+            <FormationSelector setFormation={setFormation} />
 
-          <label htmlFor="pitchColor" style={{ display: "block", margin: "20px 0 10px" }}>
-            Pitch Color:
-          </label>
-
-          <input
-            id="pitchColor"
-            type="color"
-            value={pitchHue}
-            onChange={(e) => setPitchHue(e.target.value)}
-            style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
-          />
-          <button
-            style={{
-              marginTop: "10px",
-              padding: "6px 12px",
-              backgroundColor: "#555",
-              border: "none",
-              color: "white",
-              cursor: "pointer",
-              borderRadius: "4px",
-              width: "100%",
-            }}
-            onClick={() => setPitchHue("#008A2B")}
-          >
-            Reset Pitch Color
-          </button>
-
-          <label htmlFor="lineColor" style={{ display: "block", margin: "20px 0 10px" }}>
-  Pitch Line Color:
-</label>
-
-<input
-  id="lineColor"
-  type="color"
-  value={lineColor}
-  onChange={(e) => setPitchLineHue(e.target.value)}
-  style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
-/>
-
-<button
-  style={{
-    marginTop: "10px",
-    padding: "6px 12px",
-    backgroundColor: "#555",
-    border: "none",
-    color: "white",
-    cursor: "pointer",
-    borderRadius: "4px",
-    width: "100%",
-  }}
-  onClick={() => setPitchLineHue("#CCCCCC")}  // reset to white
->
-  Reset Line Color
-</button>
-
-          <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
-          <div style={{ marginTop: "10px" }}>
-            <label>
-              <input
-                type="radio"
-                name="pitchStyle"
-                value="normal"
-                checked={pitchStyle === "normal"}
-                onChange={() => setPitchStyle("normal")}
-                style={{ marginRight: "8px" }}
-              />
-              Normal Pitch
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="pitchStyle"
-                value="striped"
-                checked={pitchStyle === "striped"}
-                onChange={() => setPitchStyle("striped")}
-                style={{ marginRight: "8px" }}
-              />
-              Striped Pitch
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="pitchStyle"
-                value="simple"
-                checked={pitchStyle === "simple"}
-                onChange={() => setPitchStyle("simple")}
-                style={{ marginRight: "8px" }}
-              />
-              Simple Pitch
-            </label>
-          </div>
-
-          <div style={{ textAlign: "center", marginBottom: "20px", marginTop: "20px" }}>
-  <label style={{ color: "white", marginRight: "8px", fontWeight: "bold", }}>
-    Players on pitch:
-  </label>
-  <select
-    value={numPlayers}
-    onChange={(e) => setNumPlayers(Number(e.target.value))}
-    style={{ padding: "6px 10px", fontSize: "16px", borderRadius: "6px", backgroundColor: "#282828" }}
-  >
-    <option value={11}>11</option>
-    <option value={7}>7</option>
-    <option value={5}>5</option>
-  </select>
-</div>
-
-          <div style={{ marginTop: "20px" }}>
+            {/* Pitch Options Button */}
             <button
-              onClick={() => setShowFilename((prev) => !prev)}
+              onClick={() => setShowPitchOptions((prev) => !prev)}
               style={{
+                padding: "6px 12px",
+                fontSize: "18px",
+                borderRadius: "4px",
+                cursor: "pointer",
+                backgroundColor: teamColor,
+              }}
+            >
+              {showPitchOptions ? "Hide Pitch Options" : "Show Pitch Options"}
+            </button>
+
+            {/* Search Club Squad Button */}
+            <button
+              onClick={() => setShowSquadSearch((prev) => !prev)}
+              style={{
+                padding: "6px 12px",
+                fontSize: "18px",
+                borderRadius: "4px",
+                cursor: "pointer",
+                backgroundColor: teamColor,
+              }}
+            >
+              Search Club Squad
+            </button>
+          </div>
+        </div>
+
+        <Pitch
+          formation={formation}
+          players={players}
+          updatePlayer={updatePlayer}
+          pitchHue={pitchHue}
+          lineColor={lineColor}
+          teamColor={teamColor}
+          clubName={clubName}
+          pitchStyle={pitchStyle}
+          captain={captain}
+          setCaptain={setCaptain}
+          showFilename={showFilename}
+          numPlayers={numPlayers}
+          showSubs={showSubs}
+        />
+
+        {/* Sidebar for Pitch Options */}
+        {showPitchOptions && (
+          <div
+            style={{
+              position: "fixed",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: "300px",
+              backgroundColor: "#222",
+              padding: "20px",
+              color: "white",
+              boxShadow: "2px 0 5px rgba(0,0,0,0.7)",
+              zIndex: 1000,
+              overflowY: "auto",
+            }}
+          >
+            <h3 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "15px" }}>
+              Pitch Options
+            </h3>
+
+            <label htmlFor="pitchColor" style={{ display: "block", margin: "20px 0 10px" }}>
+              Pitch Color:
+            </label>
+
+            <input
+              id="pitchColor"
+              type="color"
+              value={pitchHue}
+              onChange={(e) => setPitchHue(e.target.value)}
+              style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
+            />
+            <button
+              style={{
+                marginTop: "10px",
+                padding: "6px 12px",
+                backgroundColor: "#555",
+                border: "none",
+                color: "white",
+                cursor: "pointer",
+                borderRadius: "4px",
+                width: "100%",
+              }}
+              onClick={() => setPitchHue("#008A2B")}
+            >
+              Reset Pitch Color
+            </button>
+
+            <label htmlFor="lineColor" style={{ display: "block", margin: "20px 0 10px" }}>
+              Pitch Line Color:
+            </label>
+
+            <input
+              id="lineColor"
+              type="color"
+              value={lineColor}
+              onChange={(e) => setPitchLineHue(e.target.value)}
+              style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
+            />
+
+            <button
+              style={{
+                marginTop: "10px",
+                padding: "6px 12px",
+                backgroundColor: "#555",
+                border: "none",
+                color: "white",
+                cursor: "pointer",
+                borderRadius: "4px",
+                width: "100%",
+              }}
+              onClick={() => setPitchLineHue("#CCCCCC")} // reset to white
+            >
+              Reset Line Color
+            </button>
+
+            <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
+            <div style={{ marginTop: "10px" }}>
+              <label>
+                <input
+                  type="radio"
+                  name="pitchStyle"
+                  value="normal"
+                  checked={pitchStyle === "normal"}
+                  onChange={() => setPitchStyle("normal")}
+                  style={{ marginRight: "8px" }}
+                />
+                Normal Pitch
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="pitchStyle"
+                  value="striped"
+                  checked={pitchStyle === "striped"}
+                  onChange={() => setPitchStyle("striped")}
+                  style={{ marginRight: "8px" }}
+                />
+                Striped Pitch
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="pitchStyle"
+                  value="simple"
+                  checked={pitchStyle === "simple"}
+                  onChange={() => setPitchStyle("simple")}
+                  style={{ marginRight: "8px" }}
+                />
+                Simple Pitch
+              </label>
+            </div>
+
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: "20px",
+                marginTop: "20px",
+              }}
+            >
+              <label
+                style={{
+                  color: "white",
+                  marginRight: "8px",
+                  fontWeight: "bold",
+                }}
+              >
+                Players on pitch:
+              </label>
+              <select
+                value={numPlayers}
+                onChange={(e) => setNumPlayers(Number(e.target.value))}
+                style={{
+                  padding: "6px 10px",
+                  fontSize: "16px",
+                  borderRadius: "6px",
+                  backgroundColor: "#282828",
+                }}
+              >
+                <option value={11}>11</option>
+                <option value={7}>7</option>
+                <option value={5}>5</option>
+              </select>
+            </div>
+ {/* NEW: Show Subs Checkbox */}
+            <div
+              className="flex items-center justify-between"
+              style={{ marginTop: "20px" }}
+            >
+              <label
+                htmlFor="showSubs"
+                style={{ color: "white", fontWeight: "bold" }}
+              >
+                Show Subs
+              </label>
+              <input
+                id="showSubs"
+                type="checkbox"
+                checked={showSubs}
+                onChange={(e) => setShowSubs(e.target.checked)}
+                style={{ cursor: "pointer", width: "20px", height: "20px" }}
+              />
+            </div>
+
+ <div style={{ marginTop: "20px" }}>
+  <button
+  onClick={() => setShowFilename((prev) => !prev)}
+  style={{
                 padding: "6px 12px",
                 fontSize: "18px",
                 borderRadius: "4px",
