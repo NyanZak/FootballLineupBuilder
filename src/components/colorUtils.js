@@ -18,6 +18,7 @@ export function rgbToHsl(r, g, b) {
   return [h, s, l];
 }
 
+
 // Convert HSL to RGB
 export function hslToRgb(h, s, l) {
   let r, g, b;

@@ -12,7 +12,6 @@ const FormationLayouts = {
     { pos: "ST1", x: 1.6, y: 1 },
     { pos: "ST2", x: 2.8, y: 1 },
   ],
-// 5-player formation: 1 GK, 2 CBs, 1 DM/CM/AM, 1 CF
   "5-player": [
     { pos: "GK", x: 2.225, y: 6.6  },
     { pos: "CB1", x: 1.475, y: 5.865 },
@@ -20,8 +19,6 @@ const FormationLayouts = {
     { pos: "CM", x: 2.225, y: 3.5  },
     { pos: "ST", x: 2.225, y: 0.85 },
   ],
-
-  // 7-player formation: 1 GK, 2 CBs, 2 DM/CM/AM, 2 CF/LW/RW
   "7-player": [
     { pos: "GK", x: 2.225, y: 6.6  },
     { pos: "CB1", x: 1.475, y: 5.865 },
@@ -31,7 +28,6 @@ const FormationLayouts = {
     { pos: "ST1", x: 1.6, y: 1 },
     { pos: "ST2", x: 2.8, y: 1 },
   ],
-
   "4-4-2": [
     { pos: "GK", x: 2.225, y: 6.6},
     { pos: "LB", x: 0.45, y: 5.865 },

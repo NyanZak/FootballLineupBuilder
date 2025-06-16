@@ -166,6 +166,8 @@ export default function Pitch({
   const mouseDownPos = useRef({ x: 0, y: 0 });
   const dragStarted = useRef(false);
 
+  const [subInputs, setSubInputs] = useState({});
+
 const [processedPitch, setProcessedPitch] = useState(null);
 
 const getBaseHueFromPitchImage = () => {
@@ -492,6 +494,7 @@ useEffect(() => {
 
   return (
     <React.Fragment key={pos}>
+      {/* Main Player Circle */}
       <div
         className="pitch-cell absolute"
         style={{
@@ -503,7 +506,7 @@ useEffect(() => {
           alignItems: "center",
           justifyContent: "center",
           borderRadius: "50%",
-          background: teamColor || "#282828",  // <-- use the teamColor here
+          background: teamColor || "#282828",
           border: "1px solid black",
           cursor: "pointer",
           userSelect: "none",
@@ -515,7 +518,8 @@ useEffect(() => {
         onMouseDown={handleMouseDown(pos)}
       >
         {pos}
-{/* Add Captain Badge */}
+
+        {/* Captain Badge */}
         {pos === captain && (
           <div
             style={{
@@ -538,33 +542,59 @@ useEffect(() => {
             C
           </div>
         )}
+
+        {/* Sub "S" Badge */}
+        {showSubs && (
+          <div
+            style={{
+              position: "absolute",
+              top: "-12px",
+              right: "-12px",
+              width: "24px",
+              height: "24px",
+              borderRadius: "50%",
+              backgroundColor: "#858383",
+              color: "#fff",
+              fontSize: "13px",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid black",
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+          >
+            S
+          </div>
+        )}
       </div>
 
-{editingPositions.includes(pos) && (
-  <>
-    <EditablePlayerInput
-      key={pos}
-      pos={pos}
-      x={x}
-      y={y}
-      playerName={playerName}
-      updatePlayer={updatePlayer}
-      draggedPos={draggedPos}
-      isDragging={isDragging}
-      onMouseUp={handleGlobalMouseUp}
-      filename={filename}
-      teamColor={teamColor}
-    />
+      {/* Editable Input for main player */}
+      {editingPositions.includes(pos) && (
+        <EditablePlayerInput
+          key={pos}
+          pos={pos}
+          x={x}
+          y={y}
+          playerName={playerName}
+          updatePlayer={updatePlayer}
+          draggedPos={draggedPos}
+          isDragging={isDragging}
+          onMouseUp={handleGlobalMouseUp}
+          filename={filename}
+          teamColor={teamColor}
+        />
+      )}
 
-    {showSubs && (
-      <>
-        {/* Sub input box above the small circle */}
+      {/* Sub Input (Always shows if showSubs is true) */}
+      {showSubs && (
         <div
           style={{
             position: "absolute",
-            left: `${x * 125 + 15}px`,
-            top: `${y * 100 - 35}px`,
-            transform: "translate(-50%, 80%)",
+            left: `${x * 125 + 45}px`,
+            top: `${y * 100 - 40}px`,
+            transform: "translateX(-50%)",
             zIndex: 9,
           }}
         >
@@ -573,49 +603,21 @@ useEffect(() => {
             placeholder={`${pos} Sub`}
             style={{
               width: "60px",
-              justifyContent: "center",
               borderRadius: "4px",
               backgroundColor: "rgba(28, 28, 28, 0.7)",
               border: "1px solid #ccc",
               color: "white",
               textAlign: "center",
-              position: "absolute",
               fontSize: "12px",
               padding: "1px 4px",
             }}
           />
         </div>
-
-        {/* "S" circle */}
-        <div
-          style={{
-            position: "absolute",
-            left: `${x * 125 + 45}px`,
-            top: `${y * 100 - 30}px`,
-            width: "24px",
-            height: "24px",
-            borderRadius: "50%",
-            backgroundColor: "#858383",
-            color: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "13px",
-            fontWeight: "bold",
-            border: "1px solid black",
-            transform: "translate(-50%, 80%)",
-            zIndex: 8,
-          }}
-        >
-          S
-        </div>
-      </>
-    )}
-   </> 
-   )}
+      )}
     </React.Fragment>
   );
 })}
+
 
       </div>
 
