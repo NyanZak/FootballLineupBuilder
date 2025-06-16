@@ -32,7 +32,7 @@ function App() {
 
   // New state for subs toggle
   const [showSubs, setShowSubs] = useState(false);
-
+  const [showManager, setShowManager] = useState(false);
   // Handler for Enter key press in input
   const handleSearchKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -119,6 +119,7 @@ function App() {
           showFilename={showFilename}
           numPlayers={numPlayers}
           showSubs={showSubs}
+          showManager={showManager}
         />
 
         {/* Sidebar for Pitch Options */}
@@ -267,7 +268,7 @@ function App() {
                 <option value={5}>5</option>
               </select>
             </div>
- {/* NEW: Show Subs Checkbox */}
+          {/* NEW: Show Subs Checkbox */}
             <div
               className="flex items-center justify-between"
               style={{ marginTop: "20px" }}
@@ -283,6 +284,25 @@ function App() {
                 type="checkbox"
                 checked={showSubs}
                 onChange={(e) => setShowSubs(e.target.checked)}
+                style={{ cursor: "pointer", width: "20px", height: "20px" }}
+              />
+            </div>
+            {/* NEW: Show Manager Checkbox */}
+            <div
+              className="flex items-center justify-between"
+              style={{ marginTop: "20px" }}
+            >
+              <label
+                htmlFor="showManager"
+                style={{ color: "white", fontWeight: "bold" }}
+              >
+                Show Manager
+              </label>
+              <input
+                id="showManager"
+                type="checkbox"
+                checked={showManager}
+                onChange={(e) => setShowManager(e.target.checked)}
                 style={{ cursor: "pointer", width: "20px", height: "20px" }}
               />
             </div>

@@ -57,5 +57,4 @@ const teamLogos = {
   wolves,
 };
 
-
 export default teamLogos;

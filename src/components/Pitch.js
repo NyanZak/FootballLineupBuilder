@@ -8,6 +8,8 @@ import html2canvas from "html2canvas";
 
 import { rgbToHsl, hslToRgb } from "./colorUtils";
 import teamLogos from "../teamLogos";
+import { getTeamManager } from '../teamManagers';
+import defaultManagerImage from '../assets/defaultmanager.png';
 
 // Helper to convert hex to rgb
 function hexToRgb(hex) {
@@ -151,7 +153,9 @@ export default function Pitch({
   lineColor,
   numPlayers,
   showSubs={showSubs},
+  showManager,
 }) {  
+  
   const [editingPositions, setEditingPositions] = useState([]);
   const [filename, setFilename] = useState(formation);
   const lastFormationRef = useRef(formation);
@@ -170,6 +174,8 @@ export default function Pitch({
 
 const [processedPitch, setProcessedPitch] = useState(null);
 
+  const [managerImage, setManagerImage] = useState(null);
+
 const getBaseHueFromPitchImage = () => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -187,7 +193,6 @@ img.src =
     const imageData = ctx.getImageData(img.width / 2, img.height / 2, 1, 1);
     const [r, g, b] = imageData.data; // r,g,b,a
     const baseHue = rgbToHue(r, g, b);
-    console.log("Base pitch hue:", baseHue);
   };
 };
 
@@ -459,6 +464,32 @@ useEffect(() => {
           cursor: isDragging ? "grabbing" : "default",
         }}
       >
+     {/* Manager Image positioned top-left */}
+{showManager && (() => {
+  const manager = getTeamManager(clubName); // e.g., returns { name, photoUrl } or undefined
+  const managerImage = manager?.photoUrl || defaultManagerImage;
+
+  return (
+    <img
+      src={managerImage}
+      alt={manager?.name ? `${manager.name} manager` : "Default manager"}
+      style={{
+        position: "absolute",
+        top: "10px",
+        left: "10px",
+        width: "60px",
+        height: "60px",
+        borderRadius: "8px",
+        boxShadow: "0 0 8px rgba(0,0,0,0.6)",
+        objectFit: "cover",
+        zIndex: 20,
+        userSelect: "none",
+      }}
+      draggable={false}
+    />
+  );
+})()}
+
 {showFilename && (
   <div
     style={{
