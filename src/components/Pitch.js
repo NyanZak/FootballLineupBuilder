@@ -176,6 +176,13 @@ const [processedPitch, setProcessedPitch] = useState(null);
 
   const [managerImage, setManagerImage] = useState(null);
 
+const updateSubInput = (pos, value) => {
+  setSubInputs((prev) => ({
+    ...prev,
+    [pos]: value,
+  }));
+};
+
 const getBaseHueFromPitchImage = () => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -618,29 +625,31 @@ useEffect(() => {
         />
       )}
 
-      {/* Sub Input (Always shows if showSubs is true) */}
+{/* Sub input tied to this player */}
       {showSubs && (
         <div
           style={{
             position: "absolute",
-            left: `${x * 125 + 45}px`,
             top: `${y * 100 - 40}px`,
+            left: `${x * 125 + 45}px`,
             transform: "translateX(-50%)",
             zIndex: 9,
           }}
         >
           <input
             type="text"
-            placeholder={`${pos} Sub`}
+            value={subInputs[pos] || ""}
+            onChange={(e) => updateSubInput(pos, e.target.value)}
+            placeholder={`Sub for ${pos}`}
             style={{
-              width: "60px",
-              borderRadius: "4px",
-              backgroundColor: "rgba(28, 28, 28, 0.7)",
-              border: "1px solid #ccc",
-              color: "white",
-              textAlign: "center",
+              width: "80px",
               fontSize: "12px",
-              padding: "1px 4px",
+              padding: "2px 4px",
+              borderRadius: "4px",
+              backgroundColor: "#444",
+              color: "white",
+              border: "1px solid #ccc",
+              textAlign: "center",
             }}
           />
         </div>
@@ -648,7 +657,6 @@ useEffect(() => {
     </React.Fragment>
   );
 })}
-
 
       </div>
 
