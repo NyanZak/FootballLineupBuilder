@@ -1,17 +1,13 @@
-.pitch-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 125px);
-  grid-template-rows: repeat(5, 100px);
-  gap: 5px;
-
-  width: 850px;          
-  height: 700px;         
-  margin: 100px auto 0 auto;
-
+.pitch-container {
+  width: 600px;
+  height: 750px;
+  margin: 2px auto 0 auto;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  position: relative;
+  cursor: default;
+  background-size: 100% 102.5%;
   background-repeat: no-repeat;
   background-position: center;
-
-  border-radius: 10px;
 }
 
 .formation-select {
@@ -30,7 +26,6 @@
 #pitch {
   box-shadow: none !important;
   transition: none !important;
-
 }
 
 .player-input {
@@ -38,4 +33,19 @@
   font-family: Arvo, sans-serif !important;
   background-color: #282828 !important;
   color: white !important;
+}
+
+@media (max-width: 360px) {
+  .formation-select {
+    font-size: 14px !important;
+    padding: 4px 8px !important;
+    width: 80px !important; /* smaller than desktop */
+    border-radius: 4px;
+    background-color: #282828; /* keep consistent */
+    border: 1px solid #ccc;
+  }
+  .pitch-container {
+    width: 320px;   /* smaller width */
+    height: 400px;  /* scale height proportionally */
+  }
 }

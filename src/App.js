@@ -7,6 +7,7 @@ import headerImg from "./assets/header.png";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getTeamColor } from "./teamColors";
+import { FaCog, FaSearch } from "react-icons/fa";
 
 function App() {
   const [formation, setFormation] = useState("4-4-2(2)");
@@ -56,9 +57,12 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
-        <h1 className="text-3xl font-bold h-full text-center">
-          Nyan's Football Lineup Builder
-        </h1>
+<h1
+  className="text-[1.375rem] sm:text-3xl font-bold h-full text-center"
+  style={{ whiteSpace: "nowrap" }}
+>
+  Nyan's Football Lineup Builder
+</h1>
 
         <div
           className="relative flex flex-col justify-center items-center mt-3 rounded-lg max-w-[900px] mx-auto"
@@ -71,13 +75,19 @@ function App() {
             height: "60px",
           }}
         >
-          <div className="flex items-center gap-5">
-            <label className="text-white font-semibold text-xl">Formation:</label>
+        <div className="flex items-center gap-5 top-controls">
+<label
+  className="text-white font-semibold text-xl top-control-label hide-on-mobile"
+  style={{ whiteSpace: "nowrap" }}
+>
+  Formation:
+</label>
             <FormationSelector setFormation={setFormation} />
 
             {/* Pitch Options Button */}
             <button
               onClick={() => setShowPitchOptions((prev) => !prev)}
+              className="top-control-button flex items-center gap-1"
               style={{
                 padding: "6px 12px",
                 fontSize: "18px",
@@ -85,13 +95,15 @@ function App() {
                 cursor: "pointer",
                 backgroundColor: teamColor,
               }}
-            >
-              {showPitchOptions ? "Hide Pitch Options" : "Show Pitch Options"}
-            </button>
+>
+  <FaCog className="text-white" />
+  <span className="hide-on-mobile">Show Pitch Options</span>
+</button>
 
             {/* Search Club Squad Button */}
             <button
               onClick={() => setShowSquadSearch((prev) => !prev)}
+              className="top-control-button flex items-center gap-1"
               style={{
                 padding: "6px 12px",
                 fontSize: "18px",
@@ -99,9 +111,10 @@ function App() {
                 cursor: "pointer",
                 backgroundColor: teamColor,
               }}
-            >
-              Search Club Squad
-            </button>
+>
+  <FaSearch className="text-white" />
+  <span className="hide-on-mobile ">Search Club Squad</span>
+</button>
           </div>
         </div>
 

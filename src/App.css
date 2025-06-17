@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+
+@media (max-width: 360px) {
+  .top-controls {
+  overflow-x: auto; /* allow horizontal scroll if needed */
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+  white-space: nowrap; /* prevent wrapping */
+  }
+
+.top-controls > * {
+  flex-shrink: 1;   /* allow items to shrink */
+  min-width: 0;     /* prevent overflow on flex items */
+  display: inline-flex; /* keep label inline */
+  vertical-align: middle;
+  }
+
+  /* Optional: smaller font for buttons and label on mobile */
+  .top-control-label {
+    font-size: 14px;
+  }
+.top-control-button {
+    font-size: 14px !important;
+    padding: 4px 8px !important;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+}
