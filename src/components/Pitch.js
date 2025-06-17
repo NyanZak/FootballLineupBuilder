@@ -640,7 +640,7 @@ useEffect(() => {
             type="text"
             value={subInputs[pos] || ""}
             onChange={(e) => updateSubInput(pos, e.target.value)}
-            placeholder={`Sub for ${pos}`}
+            placeholder={`${pos} Sub`}
             style={{
               width: "80px",
               fontSize: "12px",
