@@ -637,21 +637,21 @@ useEffect(() => {
             zIndex: 9,
           }}
         >
-          <input
-            type="text"
-            value={subInputs[pos] || ""}
-            onChange={(e) => updateSubInput(pos, e.target.value)}
-            placeholder={`${pos} Sub`}
-            style={{
-              width: "80px",
-              fontSize: "12px",
-              padding: "2px 4px",
-              borderRadius: "4px",
-              backgroundColor: "#444",
-              color: "white",
-              border: "1px solid #ccc",
-              textAlign: "center",
-            }}
+<input
+  type="text"
+  value={subInputs[pos] || ""}
+  onChange={(e) => updateSubInput(pos, e.target.value)}
+  placeholder={`${pos} Sub`}
+  style={{
+    width: `${Math.max(9, (subInputs[pos]?.length || 0) + 4)}ch`,
+    fontSize: "12px",
+    padding: "2px 4px",
+    borderRadius: "4px",
+    backgroundColor: "#444",
+    color: "white",
+    border: "1px solid #ccc",
+    textAlign: "center",
+  }}
           />
         </div>
       )}
