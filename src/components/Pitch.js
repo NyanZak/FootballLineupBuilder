@@ -434,6 +434,7 @@ useEffect(() => {
     setPositions(FormationLayouts[formation] || []);
     layout.forEach(({ pos }) => updatePlayer(pos, ""));
     setEditingPositions([]);
+    setSubInputs({});
   };
 
   // Export handler
