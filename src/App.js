@@ -13,34 +13,27 @@ function App() {
   const [formation, setFormation] = useState("4-4-2(2)");
   const [players, setPlayers] = useState({});
   const [captain, setCaptain] = useState(null);
-
   const [showSquadSearch, setShowSquadSearch] = useState(false);
   const [showPitchOptions, setShowPitchOptions] = useState(false);
-
   const [teamColor, setTeamColor] = useState("#282828");
   const [searchQuery, setSearchQuery] = useState("");
   const [clubName, setClubName] = useState("");
-
-  const updatePlayer = (pos, value) =>
-    setPlayers((prev) => ({ ...prev, [pos]: value }));
-  const handleSearchChange = (e) => setSearchQuery(e.target.value);
   const [numPlayers, setNumPlayers] = useState(11);
-
-  const [pitchStyle, setPitchStyle] = useState("normal"); // "normal" or "simple" or "striped"
+  const [pitchStyle, setPitchStyle] = useState("normal");
   const [pitchHue, setPitchHue] = useState("#008A2B");
   const [lineColor, setPitchLineHue] = useState("#CCCCCC");
-
   const [showFilename, setShowFilename] = useState(true);
-
-  // New state for subs toggle
   const [showSubs, setShowSubs] = useState(false);
   const [showManager, setShowManager] = useState(false);
 
-  // Handler for Enter key press in input
+  const updatePlayer = (pos, value) =>
+    setPlayers((prev) => ({ ...prev, [pos]: value }));
+
+  const handleSearchChange = (e) => setSearchQuery(e.target.value);
+
   const handleSearchKeyDown = (e) => {
     if (e.key === "Enter") {
       const clubNameInput = searchQuery.trim().toLowerCase();
-
       if (clubNameInput === "") {
         setTeamColor("#282828");
         setClubName("");
@@ -59,10 +52,7 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-green-900 text-white pt-2 pb-4">
-        <h1
-          className="text-[1.375rem] sm:text-3xl font-bold h-full text-center"
-          style={{ whiteSpace: "nowrap" }}
-        >
+        <h1 className="text-[1.375rem] sm:text-3xl font-bold h-full text-center" style={{ whiteSpace: "nowrap" }}>
           Nyan's Football Lineup Builder
         </h1>
 
@@ -78,15 +68,11 @@ function App() {
           }}
         >
           <div className="flex items-center gap-5 top-controls">
-            <label
-              className="text-white font-semibold text-xl top-control-label hide-on-mobile"
-              style={{ whiteSpace: "nowrap" }}
-            >
+            <label className="text-white font-semibold text-xl top-control-label hide-on-mobile" style={{ whiteSpace: "nowrap" }}>
               Formation:
             </label>
             <FormationSelector setFormation={setFormation} />
 
-            {/* Pitch Options Button */}
             <button
               onClick={() => setShowPitchOptions((prev) => !prev)}
               className="top-control-button flex items-center gap-1"
@@ -102,7 +88,6 @@ function App() {
               <span className="hide-on-mobile">Show Pitch Options</span>
             </button>
 
-            {/* Search Club Squad Button */}
             <button
               onClick={() => setShowSquadSearch((prev) => !prev)}
               className="top-control-button flex items-center gap-1"
@@ -115,7 +100,7 @@ function App() {
               }}
             >
               <FaSearch className="text-white" />
-              <span className="hide-on-mobile ">Search Club Squad</span>
+              <span className="hide-on-mobile">Search Club Squad</span>
             </button>
           </div>
         </div>
@@ -137,136 +122,68 @@ function App() {
           showManager={showManager}
         />
 
-        {/* Sidebar for Pitch Options */}
         {showPitchOptions && (
-          <div
-          className="pitch-options-sidebar"
-            style={{
-              position: "fixed",
-              left: 0,
-              top: 0,
-              bottom: 0,
-             // width: "300px",
-             // backgroundColor: "#222",
-              padding: "20px",
-              color: "white",
-              boxShadow: "2px 0 5px rgba(0,0,0,0.7)",
-              zIndex: 1000,
-              overflowY: "auto",
-            }}
-          >
-<h3 className="pitch-options-heading">
-  Pitch Options
-</h3>
+          <div className="pitch-options-sidebar" style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            padding: "20px",
+            color: "white",
+            boxShadow: "2px 0 5px rgba(0,0,0,0.7)",
+            zIndex: 1000,
+            overflowY: "auto",
+          }}>
+            <h3 className="pitch-options-heading">Pitch Options</h3>
 
-            <label
-              htmlFor="pitchColor"
-              style={{ display: "block", margin: "20px 0 10px" }}
-            >
+            <label htmlFor="pitchColor" style={{ display: "block", margin: "20px 0 10px" }}>
               Pitch Color:
             </label>
-
             <input
               id="pitchColor"
               type="color"
               value={pitchHue}
               onChange={(e) => setPitchHue(e.target.value)}
-              style={{
-                width: "100%",
-                height: "40px",
-                padding: "0",
-                border: "none",
-                cursor: "pointer",
-              }}
+              style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
             />
-<button
-  className="reset-pitch-color-btn"
-  onClick={() => setPitchHue("#008A2B")}
->
-  Reset Pitch Color
-</button>
+            <button className="reset-pitch-color-btn" onClick={() => setPitchHue("#008A2B")}>
+              Reset Pitch Color
+            </button>
 
-            <label
-              htmlFor="lineColor"
-              style={{ display: "block", margin: "20px 0 10px" }}
-            >
+            <label htmlFor="lineColor" style={{ display: "block", margin: "20px 0 10px" }}>
               Pitch Line Color:
             </label>
-
             <input
               id="lineColor"
               type="color"
               value={lineColor}
               onChange={(e) => setPitchLineHue(e.target.value)}
-              style={{
-                width: "100%",
-                height: "40px",
-                padding: "0",
-                border: "none",
-                cursor: "pointer",
-              }}
+              style={{ width: "100%", height: "40px", padding: "0", border: "none", cursor: "pointer" }}
             />
-
-           <button
-  className="reset-line-button"
-  onClick={() => setPitchLineHue("#CCCCCC")}
->
-  Reset Line Color
-</button>
+            <button className="reset-line-button" onClick={() => setPitchLineHue("#CCCCCC")}>
+              Reset Line Color
+            </button>
 
             <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
             <div style={{ marginTop: "10px" }}>
-              <label>
-                <input
-                  type="radio"
-                  name="pitchStyle"
-                  value="normal"
-                  checked={pitchStyle === "normal"}
-                  onChange={() => setPitchStyle("normal")}
-                  style={{ marginRight: "8px" }}
-                />
-                Normal Pitch
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="pitchStyle"
-                  value="striped"
-                  checked={pitchStyle === "striped"}
-                  onChange={() => setPitchStyle("striped")}
-                  style={{ marginRight: "8px" }}
-                />
-                Striped Pitch
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="pitchStyle"
-                  value="simple"
-                  checked={pitchStyle === "simple"}
-                  onChange={() => setPitchStyle("simple")}
-                  style={{ marginRight: "8px" }}
-                />
-                Simple Pitch
-              </label>
+              {["normal", "striped", "simple"].map((style) => (
+                <label key={style}>
+                  <input
+                    type="radio"
+                    name="pitchStyle"
+                    value={style}
+                    checked={pitchStyle === style}
+                    onChange={() => setPitchStyle(style)}
+                    style={{ marginRight: "8px" }}
+                  />
+                  {style.charAt(0).toUpperCase() + style.slice(1)} Pitch
+                  <br />
+                </label>
+              ))}
             </div>
 
-            <div
-              style={{
-                textAlign: "center",
-                marginBottom: "20px",
-                marginTop: "20px",
-              }}
-            >
-              <label
-                style={{
-                  color: "white",
-                  marginRight: "8px",
-                  fontWeight: "bold",
-                }}
-              >
+            <div style={{ textAlign: "center", marginBottom: "20px", marginTop: "20px" }}>
+              <label style={{ color: "white", marginRight: "8px", fontWeight: "bold" }}>
                 Players on pitch:
               </label>
               <select
@@ -279,21 +196,14 @@ function App() {
                   backgroundColor: "#282828",
                 }}
               >
-                <option value={11}>11</option>
-                <option value={7}>7</option>
-                <option value={5}>5</option>
+                {[11, 7, 5].map(n => (
+                  <option key={n} value={n}>{n}</option>
+                ))}
               </select>
             </div>
 
-            {/* NEW: Show Subs Checkbox */}
-            <div
-              className="flex items-center justify-between"
-              style={{ marginTop: "20px" }}
-            >
-              <label
-                htmlFor="showSubs"
-                style={{ color: "white", fontWeight: "bold" }}
-              >
+            <div className="flex items-center justify-between" style={{ marginTop: "20px" }}>
+              <label htmlFor="showSubs" style={{ color: "white", fontWeight: "bold" }}>
                 Show Subs
               </label>
               <input
@@ -305,15 +215,8 @@ function App() {
               />
             </div>
 
-            {/* NEW: Show Manager Checkbox */}
-            <div
-              className="flex items-center justify-between"
-              style={{ marginTop: "20px" }}
-            >
-              <label
-                htmlFor="showManager"
-                style={{ color: "white", fontWeight: "bold" }}
-              >
+            <div className="flex items-center justify-between" style={{ marginTop: "20px" }}>
+              <label htmlFor="showManager" style={{ color: "white", fontWeight: "bold" }}>
                 Show Manager
               </label>
               <input
@@ -325,121 +228,113 @@ function App() {
               />
             </div>
 
-           <div style={{ marginTop: "20px" }} className="button-container">
-  <button
-    className="toggle-filename-btn"
-    onClick={() => setShowFilename((prev) => !prev)}
-    style={{
-      padding: "6px 12px",
-      borderRadius: "4px",
-      cursor: "pointer",
-      backgroundColor: teamColor,
-      width: "100%",
-      marginBottom: "20px", // default margin
-      fontSize: "18px",
-    }}
-  >
-    {showFilename ? "Hide Filename" : "Show Filename"}
-  </button>
+            <div style={{ marginTop: "20px" }} className="button-container">
+              <button
+                className="toggle-filename-btn"
+                onClick={() => setShowFilename((prev) => !prev)}
+                style={{
+                  padding: "6px 12px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  backgroundColor: teamColor,
+                  width: "100%",
+                  marginBottom: "20px",
+                  fontSize: "18px",
+                }}
+              >
+                {showFilename ? "Hide Filename" : "Show Filename"}
+              </button>
 
-  <button
-    className="close-btn"
-    style={{
-      padding: "6px 12px",
-      backgroundColor: "#444",
-      border: "none",
-      color: "white",
-      cursor: "pointer",
-      borderRadius: "4px",
-      width: "100%",
-      fontSize: "16px",
-    }}
-    onClick={() => setShowPitchOptions(false)}
-  >
-    Close
-  </button>
-</div>
+              <button
+                className="close-btn"
+                style={{
+                  padding: "6px 12px",
+                  backgroundColor: "#444",
+                  border: "none",
+                  color: "white",
+                  cursor: "pointer",
+                  borderRadius: "4px",
+                  width: "100%",
+                  fontSize: "16px",
+                }}
+                onClick={() => setShowPitchOptions(false)}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
 
-        {/* Search Club Squad Sidebar (Right Side) */}
-{showSquadSearch && (
-  <div className="squad-search-panel">
-    <h3>Search Club Squad</h3>
+        {showSquadSearch && (
+          <div className="squad-search-panel">
+            <h3>Search Club Squad</h3>
 
-    <input
-      type="text"
-      placeholder="Enter club name..."
-      style={{
-        width: "100%",
-        padding: "10px",
-        marginTop: "10px",
-        borderRadius: "4px",
-        border: "1px solid #444",
-        backgroundColor: "#333",
-        color: "white",
-      }}
-      value={searchQuery}
-      onChange={handleSearchChange}
-      onKeyDown={handleSearchKeyDown}
-    />
+            <input
+              type="text"
+              placeholder="Enter club name..."
+              style={{
+                width: "100%",
+                padding: "10px",
+                marginTop: "10px",
+                borderRadius: "4px",
+                border: "1px solid #444",
+                backgroundColor: "#333",
+                color: "white",
+              }}
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown}
+            />
 
-    {/* Captain dropdown */}
-    <div style={{ margin: "20px auto", textAlign: "center" }}>
-      <label htmlFor="captain-select" style={{ marginRight: "10px" }}>
-        Select Captain:
-      </label>
-      <select
-        id="captain-select"
-        value={captain || ""}
-        onChange={(e) => setCaptain(e.target.value || null)}
-        style={{
-          padding: "6px 12px",
-          fontSize: "16px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-          backgroundColor: "#282828",
-          color: "white",
-          minWidth: "120px",
-          cursor: "pointer",
-        }}
-      >
-        <option value="">-- None --</option>
-        {FormationLayouts[formation]?.map(({ pos }) => (
-          <option key={pos} value={pos}>
-            {pos}
-          </option>
-        ))}
-      </select>
-    </div>
+            <div style={{ margin: "20px auto", textAlign: "center" }}>
+              <label htmlFor="captain-select" style={{ marginRight: "10px" }}>
+                Select Captain:
+              </label>
+              <select
+                id="captain-select"
+                value={captain || ""}
+                onChange={(e) => setCaptain(e.target.value || null)}
+                style={{
+                  padding: "6px 12px",
+                  fontSize: "16px",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                  backgroundColor: "#282828",
+                  color: "white",
+                  minWidth: "120px",
+                  cursor: "pointer",
+                }}
+              >
+                <option value="">-- None --</option>
+                {FormationLayouts[formation]?.map(({ pos }) => (
+                  <option key={pos} value={pos}>
+                    {pos}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-    {/* Close button moved here */}
-    <div
-      style={{
-        display: "flex",
-        marginTop: "20px",
-        justifyContent: "center",
-        gap: "50px",
-      }}
-    >
-      <button
-        style={{
-          padding: "6px 12px",
-          backgroundColor: "#666",
-          border: "none",
-          color: "white",
-          cursor: "pointer",
-          borderRadius: "4px",
-          width: "120px",
-        }}
-        onClick={() => setShowSquadSearch(false)}
-      >
-        Close
-      </button>
-    </div>
-  </div>
-)}
-    </div>
-  </DndProvider>
-)}
+            <div style={{ display: "flex", marginTop: "20px", justifyContent: "center", gap: "50px" }}>
+              <button
+                style={{
+                  padding: "6px 12px",
+                  backgroundColor: "#666",
+                  border: "none",
+                  color: "white",
+                  cursor: "pointer",
+                  borderRadius: "4px",
+                  width: "120px",
+                }}
+                onClick={() => setShowSquadSearch(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </DndProvider>
+  );
+}
+
 export default App;

@@ -9,7 +9,7 @@
   width: 60px;
   height: 60px;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
   object-fit: cover;
   z-index: 20;
   user-select: none;
@@ -28,9 +28,9 @@
 }
 
 .formation-select {
-  font-size: 18px;        
-  padding: 8px 15px;     
-  width: 180px;           
+  font-size: 18px;
+  padding: 8px 15px;
+  width: 180px;
   border-radius: 6px;
   border: 1px solid #ccc;
   background-color: #282828;
@@ -52,49 +52,50 @@
   color: white !important;
 }
 
-  .filename-label {
-    font-size: 18px;
-  }
+.filename-label {
+  font-size: 18px;
+}
 
-  .team-logo {
+.team-logo {
   height: 24px;
   width: 24px;
   object-fit: contain;
 }
 
-
 @media (max-width: 378px) {
   .formation-select {
     font-size: 14px !important;
     padding: 4px 8px !important;
-    width: 80px !important; /* smaller than desktop */
+    width: 80px !important;
     border-radius: 4px;
-    background-color: #282828; /* keep consistent */
+    background-color: #282828;
     border: 1px solid #ccc;
   }
+
   .pitch-container {
-    width: 350px;   /* smaller width */
-    height: 420px;  /* scale height proportionally */
+    width: 350px;
+    height: 420px;
   }
-    .hide-on-mobile {
+
+  .hide-on-mobile {
     display: none;
   }
 
   .export-controls {
-    gap: 10px !important; /* smaller gap on mobile */
+    gap: 10px !important;
   }
 
-    .manager-image {
+  .manager-image {
     width: 40px;
     height: 40px;
   }
 
-    .filename-label {
+  .filename-label {
     font-size: 14px;
     bottom: -1px !important;
   }
 
-    .team-logo {
+  .team-logo {
     height: 14px;
     width: 14px;
     margin-top: 2px;
