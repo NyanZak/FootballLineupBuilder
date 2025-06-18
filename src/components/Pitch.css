@@ -1,3 +1,20 @@
+.export-controls {
+  gap: 30px;
+}
+
+.manager-image {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+  object-fit: cover;
+  z-index: 20;
+  user-select: none;
+}
+
 .pitch-container {
   width: 600px;
   height: 750px;
@@ -45,7 +62,19 @@
     border: 1px solid #ccc;
   }
   .pitch-container {
-    width: 320px;   /* smaller width */
-    height: 400px;  /* scale height proportionally */
+    width: 350px;   /* smaller width */
+    height: 420px;  /* scale height proportionally */
+  }
+    .hide-on-mobile {
+    display: none;
+  }
+
+  .export-controls {
+    gap: 10px !important; /* smaller gap on mobile */
+  }
+
+    .manager-image {
+    width: 40px;
+    height: 40px;
   }
 }

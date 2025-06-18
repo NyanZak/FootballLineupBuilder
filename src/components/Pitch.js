@@ -5,6 +5,7 @@ import normalpitchPng from "../assets/normalpitch.png";
 import simplepitchPng from "../assets/simplepitch.png";
 import stripedpitchPng from "../assets/stripedpitch.png";
 import html2canvas from "html2canvas"; 
+import { FaDownload } from "react-icons/fa";
 
 import { rgbToHsl, hslToRgb } from "./colorUtils";
 import teamLogos from "../teamLogos";
@@ -464,8 +465,6 @@ useEffect(() => {
           backgroundSize: "100% 102.5%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          width: "600px",
-          height: "750px",
           margin: "2px auto 0 auto",
           boxShadow: "0 8px 15px rgba(0, 0, 0, 0.5)",
           position: "relative",
@@ -478,23 +477,12 @@ useEffect(() => {
   const managerImage = manager?.photoUrl || defaultManagerImage;
 
   return (
-    <img
-      src={managerImage}
-      alt={manager?.name ? `${manager.name} manager` : "Default manager"}
-      style={{
-        position: "absolute",
-        top: "10px",
-        left: "10px",
-        width: "60px",
-        height: "60px",
-        borderRadius: "8px",
-        boxShadow: "0 0 8px rgba(0,0,0,0.6)",
-        objectFit: "cover",
-        zIndex: 20,
-        userSelect: "none",
-      }}
-      draggable={false}
-    />
+<img
+  src={managerImage}
+  alt={manager?.name ? `${manager.name} manager` : "Default manager"}
+  className="manager-image"
+  draggable={false}
+/>
   );
 })()}
 
@@ -668,7 +656,6 @@ useEffect(() => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: "10px",
     marginTop: "10px",
   }}
 >
@@ -681,7 +668,6 @@ useEffect(() => {
       backgroundColor: "#444",
       color: "white",
       pointerEvents: "auto",
-      marginRight: "80px", 
     }}
     onClick={handleResetPlayers}
   >
@@ -690,6 +676,7 @@ useEffect(() => {
 
   <label
     htmlFor="filename-input"
+    className="hide-on-mobile"
     style={{ color: "white", marginRight: "10px", whiteSpace: "nowrap" }}
   >
     Filename:
@@ -711,15 +698,14 @@ useEffect(() => {
       backgroundColor: "#444",
     }}
   />
-  <button
-    onClick={exportPitchAsPNG}
-    style={{
-      backgroundColor: teamColor,
-    }}
-    className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md transition"
-  >
-    Export as PNG
-  </button>
+<button
+  onClick={exportPitchAsPNG}
+  style={{ backgroundColor: teamColor }}
+  className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md transition flex items-center gap-2"
+>
+  <FaDownload />
+  <span className="hide-on-mobile">Export as PNG</span>
+</button>
 </div>
     </>
   );
