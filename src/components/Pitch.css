@@ -52,6 +52,17 @@
   color: white !important;
 }
 
+  .filename-label {
+    font-size: 18px;
+  }
+
+  .team-logo {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+
 @media (max-width: 378px) {
   .formation-select {
     font-size: 14px !important;
@@ -76,5 +87,16 @@
     .manager-image {
     width: 40px;
     height: 40px;
+  }
+
+    .filename-label {
+    font-size: 14px;
+    bottom: -1px !important;
+  }
+
+    .team-logo {
+    height: 14px;
+    width: 14px;
+    margin-top: 2px;
   }
 }

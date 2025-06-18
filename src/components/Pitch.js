@@ -488,25 +488,25 @@ useEffect(() => {
 
 {showFilename && (
   <div
-    style={{
-      position: "absolute",
-      bottom: "0px",
-      left: "28px",
-      color: "white",
-      fontWeight: "bold",
-      fontSize: "18px",
-      textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
-      userSelect: "none",
-      pointerEvents: "none",
-    }}
-  >
+  className="filename-label"
+  style={{
+    position: "absolute",
+    bottom: "0px",
+    left: "28px",
+    color: "white",
+    fontWeight: "bold",
+    textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
+    userSelect: "none",
+    pointerEvents: "none",
+  }}
+>
     {clubName && teamLogos[clubName.toLowerCase()] ? (
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        <img
-          src={teamLogos[clubName.toLowerCase()]}
-          alt={`${clubName} badge`}
-          style={{ height: "24px", width: "24px", objectFit: "contain" }}
-        />
+       <img
+  src={teamLogos[clubName.toLowerCase()]}
+  alt={`${clubName} badge`}
+  className="team-logo"
+/>
         <span>{filename}</span>
       </div>
     ) : (
