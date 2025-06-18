@@ -207,21 +207,12 @@ function App() {
               }}
             />
 
-            <button
-              style={{
-                marginTop: "10px",
-                padding: "6px 12px",
-                backgroundColor: "#555",
-                border: "none",
-                color: "white",
-                cursor: "pointer",
-                borderRadius: "4px",
-                width: "100%",
-              }}
-              onClick={() => setPitchLineHue("#CCCCCC")}
-            >
-              Reset Line Color
-            </button>
+           <button
+  className="reset-line-button"
+  onClick={() => setPitchLineHue("#CCCCCC")}
+>
+  Reset Line Color
+</button>
 
             <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
             <div style={{ marginTop: "10px" }}>
@@ -372,81 +363,82 @@ function App() {
         )}
 
         {/* Search Club Squad Sidebar (Right Side) */}
-        {showSquadSearch && (
-          <div className="squad-search-panel">
-            <h3>Search Club Squad</h3>
+{showSquadSearch && (
+  <div className="squad-search-panel">
+    <h3>Search Club Squad</h3>
 
-            <input
-              type="text"
-              placeholder="Enter club name..."
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginTop: "10px",
-                borderRadius: "4px",
-                border: "1px solid #444",
-                backgroundColor: "#333",
-                color: "white",
-              }}
-              value={searchQuery}
-              onChange={handleSearchChange}
-              onKeyDown={handleSearchKeyDown}
-            />
+    <input
+      type="text"
+      placeholder="Enter club name..."
+      style={{
+        width: "100%",
+        padding: "10px",
+        marginTop: "10px",
+        borderRadius: "4px",
+        border: "1px solid #444",
+        backgroundColor: "#333",
+        color: "white",
+      }}
+      value={searchQuery}
+      onChange={handleSearchChange}
+      onKeyDown={handleSearchKeyDown}
+    />
 
-            <div
-              style={{
-                display: "flex",
-                marginTop: "20px",
-                justifyContent: "center",
-                gap: "50px",
-              }}
-            >
-              <button
-                style={{
-                  padding: "6px 12px",
-                  backgroundColor: "#666",
-                  border: "none",
-                  color: "white",
-                  cursor: "pointer",
-                  borderRadius: "4px",
-                  width: "120px",
-                }}
-                onClick={() => setShowSquadSearch(false)}
-              >
-                Close
-              </button>
-            </div>
+    {/* Captain dropdown */}
+    <div style={{ margin: "20px auto", textAlign: "center" }}>
+      <label htmlFor="captain-select" style={{ marginRight: "10px" }}>
+        Select Captain:
+      </label>
+      <select
+        id="captain-select"
+        value={captain || ""}
+        onChange={(e) => setCaptain(e.target.value || null)}
+        style={{
+          padding: "6px 12px",
+          fontSize: "16px",
+          borderRadius: "6px",
+          border: "1px solid #ccc",
+          backgroundColor: "#282828",
+          color: "white",
+          minWidth: "120px",
+          cursor: "pointer",
+        }}
+      >
+        <option value="">-- None --</option>
+        {FormationLayouts[formation]?.map(({ pos }) => (
+          <option key={pos} value={pos}>
+            {pos}
+          </option>
+        ))}
+      </select>
+    </div>
 
-            {/* Captain dropdown */}
-          <div style={{ margin: "20px auto", textAlign: "center" }}>
-            <label htmlFor="captain-select" style={{ marginRight: "10px" }}>
-              Select Captain:
-            </label>
-            <select
-              id="captain-select"
-              value={captain || ""}
-              onChange={(e) => setCaptain(e.target.value || null)}
-              style={{
-                padding: "6px 12px",
-                fontSize: "16px",
-                borderRadius: "6px",
-                border: "1px solid #ccc",
-                backgroundColor: "#282828",
-                color: "white",
-                minWidth: "120px",
-                cursor: "pointer",
-              }}
-            >
-              <option value="">-- None --</option>
-              {FormationLayouts[formation]?.map(({ pos }) => (
-                <option key={pos} value={pos}>
-                  {pos}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
+    {/* Close button moved here */}
+    <div
+      style={{
+        display: "flex",
+        marginTop: "20px",
+        justifyContent: "center",
+        gap: "50px",
+      }}
+    >
+      <button
+        style={{
+          padding: "6px 12px",
+          backgroundColor: "#666",
+          border: "none",
+          color: "white",
+          cursor: "pointer",
+          borderRadius: "4px",
+          width: "120px",
+        }}
+        onClick={() => setShowSquadSearch(false)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   </DndProvider>
 )}
