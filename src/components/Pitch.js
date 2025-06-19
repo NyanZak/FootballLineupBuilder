@@ -192,9 +192,8 @@ const getBaseHueFromPitchImage = () => {
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
       const imageData = ctx.getImageData(img.width / 2, img.height / 2, 1, 1);
-      const [r, g, b] = imageData.data; // r, g, b, a
+      const [r, g, b] = imageData.data;
       const baseHue = rgbToHue(r, g, b);
-      // You might want to use baseHue here or remove this function if unused
     };
   };
 
@@ -230,22 +229,29 @@ function recolorPitchLines(image, grassHueDegrees, lineColorHex, callback) {
           data[i + 1] = targetG;
           data[i + 2] = targetB;
         } else {
-          let [h, s, l] = rgbToHsl(r, g, b);
 
-          if (pitchHue === "#ffffff") {
-            s = 0;
-            l = 0.95;
-          } else if (pitchHue === "#cccccc") {
-            s = 0;
-            l = 0.7;
-          } else if (pitchHue === "#000000") {
-            s = 0;
-            l = 0.15;
-          } else {
-            const baseHue = 138 / 360;
-            const targetHue = rgbToHue(...hexToRgb(pitchHue)) / 360;
-            h = (h + targetHue - baseHue + 1) % 1;
-          }
+    const GRAYSCALE_THEMES = [
+    { hex: "#ffffff", l: 0.95 }, 
+    { hex: "#cccccc", l: 0.75 },
+    { hex: "#888888", l: 0.45 }, 
+    { hex: "#111111", l: 0.15 }, 
+    { hex: "#000000", l: 0.0 }
+  ];
+  let [h, s, l] = rgbToHsl(r, g, b);
+  const [_, hueS, hueL] = rgbToHsl(...hexToRgb(pitchHue));
+  const isGrayscale = hueS < 0.05;
+
+              if (isGrayscale) {
+              s = 0
+              const closest = GRAYSCALE_THEMES.reduce((prev, curr) =>
+              Math.abs(curr.l - hueL) < Math.abs(prev.l - hueL) ? curr : prev
+               );
+               l = brightness < 40 && closest.hex === "#000000" ? 0.02 : closest.l;
+              } else {
+             const baseHue = 138 / 360;
+             const targetHue = rgbToHue(...hexToRgb(pitchHue)) / 360;
+             h = (h + targetHue - baseHue + 1) % 1;
+           }
 
           const [newR, newG, newB] = hslToRgb(h, s, l);
           data[i] = newR;
@@ -253,12 +259,10 @@ function recolorPitchLines(image, grassHueDegrees, lineColorHex, callback) {
           data[i + 2] = newB;
         }
       }
-
       ctx.putImageData(imageData, 0, 0);
       callback(canvas.toDataURL());
     };
   }
-
 
   useEffect(() => {
     const img = new Image();
