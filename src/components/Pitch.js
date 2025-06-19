@@ -75,23 +75,27 @@ function EditablePlayerInput({
 
    return (
     <>
-      <div
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        style={{
-          position: "absolute",
-          left: `${x * 125 + 25}px`,
-          top: `${y * 100 + 25}px`,
-          transform: "translate(-50%, 80%)",
-          cursor: draggedPos?.current === pos && isDragging ? "grabbing" : "grab",
-          userSelect: "none",
-        }}
+<div
+  onMouseDown={onMouseDown}
+  onMouseUp={onMouseUp}
+  className="player-input-wrapper"
+  style={{
+    position: "absolute",
+    "--left-pos": `${x * 125 + 25}px`,
+    "--top-pos": `${y * 100 + 25}px`,
+    left: "var(--left-pos)",
+    top: "var(--top-pos)",
+    transform: "translate(-50%, 80%)",
+    cursor: draggedPos?.current === pos && isDragging ? "grabbing" : "grab",
+    userSelect: "none",
+  }}
       >
         <input
           type="text"
           value={localValue}
           onChange={handleChange}
           placeholder={`${pos} Player`}
+          className="player-input"
           style={{
             width: `${inputWidth}px`,
             padding: "1px 8px",
@@ -308,16 +312,34 @@ function recolorPitchLines(image, grassHueDegrees, lineColorHex, callback) {
     lastClubNameRef.current = clubName;
   }, [formation, clubName]);
 
-  useEffect(() => {
-    let formationKey;
+useEffect(() => {
+  const isMobile = window.innerWidth <= 768;
+  let formationKey;
 
-    if (numPlayers === 11) formationKey = formation;
-    else if (numPlayers === 7) formationKey = "7-player";
-    else if (numPlayers === 5) formationKey = "5-player";
-    else formationKey = formation;
+  if (numPlayers === 11) {
+    formationKey =
+      isMobile && FormationLayouts[`${formation} MOBILE`]
+        ? `${formation} MOBILE`
+        : formation;
+  } else if (numPlayers === 7) {
+    formationKey =
+      isMobile && FormationLayouts["7-player MOBILE"]
+        ? "7-player MOBILE"
+        : "7-player";
+  } else if (numPlayers === 5) {
+    formationKey =
+      isMobile && FormationLayouts["5-player MOBILE"]
+        ? "5-player MOBILE"
+        : "5-player";
+  } else {
+    formationKey =
+      isMobile && FormationLayouts[`${formation} MOBILE`]
+        ? `${formation} MOBILE`
+        : formation;
+  }
 
-    setPositions(FormationLayouts[formationKey] || []);
-  }, [numPlayers, formation]);
+  setPositions(FormationLayouts[formationKey] || []);
+}, [numPlayers, formation]);
 
 const PITCH_WIDTH = 4.45;
 const PITCH_LENGTH = 7.04;
@@ -402,7 +424,32 @@ useEffect(() => {
 }, [positions]);
 
 const handleResetPlayers = () => {
-  setPositions(FormationLayouts[formation] || []);
+  const isMobile = window.innerWidth <= 768;
+  let formationKey;
+
+  if (numPlayers === 11) {
+    formationKey =
+      isMobile && FormationLayouts[`${formation} MOBILE`]
+        ? `${formation} MOBILE`
+        : formation;
+  } else if (numPlayers === 7) {
+    formationKey =
+      isMobile && FormationLayouts["7-player MOBILE"]
+        ? "7-player MOBILE"
+        : "7-player";
+  } else if (numPlayers === 5) {
+    formationKey =
+      isMobile && FormationLayouts["5-player MOBILE"]
+        ? "5-player MOBILE"
+        : "5-player";
+  } else {
+    formationKey =
+      isMobile && FormationLayouts[`${formation} MOBILE`]
+        ? `${formation} MOBILE`
+        : formation;
+  }
+
+  setPositions(FormationLayouts[formationKey] || []);
   layout.forEach(({ pos }) => updatePlayer(pos, ""));
   setEditingPositions([]);
   setSubInputs({});

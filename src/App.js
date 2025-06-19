@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pitch from "./components/Pitch";
 import FormationSelector from "./components/FormationSelector";
 import FormationLayouts from "./components/FormationLayouts";
@@ -25,6 +25,18 @@ function App() {
   const [showFilename, setShowFilename] = useState(true);
   const [showSubs, setShowSubs] = useState(false);
   const [showManager, setShowManager] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768); // Adjust threshold as needed
+  };
+
+  handleResize(); // Run on load
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   const updatePlayer = (pos, value) =>
     setPlayers((prev) => ({ ...prev, [pos]: value }));
