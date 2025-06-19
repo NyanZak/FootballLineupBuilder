@@ -490,12 +490,10 @@ return (
 return (
   <React.Fragment key={pos}>
     <div
-      className="pitch-cell absolute"
+      className="pitch-cell absolute player-circle"
       style={{
         left: `${x * 125}px`,
         top: `${y * 100}px`,
-        width: 45,
-        height: 45,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -515,6 +513,7 @@ return (
 
       {pos === captain && (
         <div
+        className="captain-badge"
           style={{
             position: "absolute",
             bottom: 0,
@@ -522,11 +521,7 @@ return (
             backgroundColor: "#FFD700",
             color: "#000",
             borderRadius: "50%",
-            width: 16,
-            height: 16,
-            fontSize: 12,
             fontWeight: "bold",
-            lineHeight: "16px",
             textAlign: "center",
             pointerEvents: "none",
             userSelect: "none",
@@ -538,21 +533,19 @@ return (
 
       {showSubs && (
         <div
+          className="subs-badge"
           style={{
             position: "absolute",
             top: -12,
             right: -12,
-            width: 24,
-            height: 24,
             borderRadius: "50%",
             backgroundColor: "#858383",
             color: "#fff",
-            fontSize: 13,
             fontWeight: "bold",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            border: "1px solid black",
+            outline: "1px solid black",
             pointerEvents: "none",
             userSelect: "none",
           }}

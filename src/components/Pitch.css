@@ -61,7 +61,21 @@
   width: 24px;
   object-fit: contain;
 }
-
+.player-circle {
+  width: 45px;
+  height: 45px;
+}
+.captain-badge {
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+}
+.subs-badge {
+  width: 24px;
+  height: 24px;
+  font-size: 13px;
+}
 @media (max-width: 378px) {
   .formation-select {
     font-size: 14px !important;
@@ -99,5 +113,25 @@
     height: 14px;
     width: 14px;
     margin-top: 2px;
+  }
+    .player-circle {
+    width: 22.5px;
+    height: 22.5px;
+    font-size: 9px !important;
+  }
+    .captain-badge {
+    width: 8px;
+    height: 8px;
+    font-size: 6px;
+    line-height: 10px;
+    right: -5px !important;
+    bottom: -1px !important;
+  }
+   .subs-badge {
+    width: 13px;
+    height: 13px;
+    font-size: 6px;
+    top: -7px !important;
+    right: -7px !important;
   }
 }
