@@ -624,12 +624,10 @@ return (
 
     {showSubs && (
       <div
+      className="sub-input-container"
         style={{
-          position: "absolute",
-          top: y * 100 - 40,
-          left: x * 125 + 45,
-          transform: "translateX(-50%)",
-          zIndex: 9,
+      "--top": `${y * 100 - 40}px`,
+      "--left": `${x * 125 + 45}px`,
         }}
       >
         <input
@@ -637,15 +635,16 @@ return (
           value={subInputs[pos] || ""}
           onChange={(e) => updateSubInput(pos, e.target.value)}
           placeholder={`${pos} Sub`}
+          className="sub-input"
           style={{
             width: `${Math.max(9, (subInputs[pos]?.length || 0) + 4)}ch`,
-            fontSize: 12,
-            padding: "2px 4px",
-            borderRadius: 4,
-            backgroundColor: "#444",
-            color: "white",
-            border: "1px solid #ccc",
-            textAlign: "center",
+            //fontSize: 12,
+            //padding: "2px 4px",
+            //borderRadius: 4,
+            //backgroundColor: "#444",
+            //color: "white",
+           // border: "1px solid #ccc",
+         //   textAlign: "center",
           }}
         />
       </div>

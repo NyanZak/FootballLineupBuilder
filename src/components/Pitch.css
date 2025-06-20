@@ -76,6 +76,24 @@
   height: 24px;
   font-size: 13px;
 }
+.sub-input {
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color: #444;
+  color: white;
+  border: 1px solid #ccc;
+  text-align: center;
+  width: auto;
+}
+
+.sub-input-container {
+  position: absolute;
+  top: var(--top);
+  left: var(--left);
+  transform: translateX(-50%);
+  z-index: 9;
+}
 
 
 @media (max-width: 378px) {
@@ -147,4 +165,14 @@
     left: calc(var(--left-pos) + 10px) !important;
     top: calc(var(--top-pos) - 25px) !important;
   }
+  .sub-input {
+    font-size: 8px;
+    padding: 1px 3px;
+    border-radius: 3px;
+  }
+  .sub-input-container {
+    top: calc(var(--top) + 8px);  /* example: move up slightly on mobile */
+    left: calc(var(--left) - 18px); /* example: shift left on mobile */
+
+ }
 }
