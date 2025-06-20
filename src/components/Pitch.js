@@ -638,13 +638,6 @@ return (
           className="sub-input"
           style={{
             width: `${Math.max(9, (subInputs[pos]?.length || 0) + 4)}ch`,
-            //fontSize: 12,
-            //padding: "2px 4px",
-            //borderRadius: 4,
-            //backgroundColor: "#444",
-            //color: "white",
-           // border: "1px solid #ccc",
-         //   textAlign: "center",
           }}
         />
       </div>
