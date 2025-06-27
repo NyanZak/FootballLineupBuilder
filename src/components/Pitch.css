@@ -138,6 +138,7 @@
     width: 22.5px;
     height: 22.5px;
     font-size: 9px !important;
+    touch-action: none !important;
   }
     .captain-badge {
     width: 8px;
@@ -164,7 +165,7 @@
     .player-input-wrapper {
     left: calc(var(--left-pos) - 12px) !important;
     top: calc(var(--top-pos) - 25px) !important;
-    touch-action: none;
+    touch-action: none !important;
   }
   .sub-input {
     font-size: 8px;
