@@ -109,7 +109,6 @@
   .pitch-container {
     width: 350px;
     height: 420px;
-    touch-action: none;
   }
 
   .hide-on-mobile {
@@ -165,6 +164,7 @@
     .player-input-wrapper {
     left: calc(var(--left-pos) - 12px) !important;
     top: calc(var(--top-pos) - 25px) !important;
+    touch-action: none;
   }
   .sub-input {
     font-size: 8px;
