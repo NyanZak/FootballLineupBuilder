@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/FootballLineupBuilder/static/css/main.c4c8cba9.css",
-    "main.js": "/FootballLineupBuilder/static/js/main.21ce4938.js",
+    "main.css": "/FootballLineupBuilder/static/css/main.d7b3de76.css",
+    "main.js": "/FootballLineupBuilder/static/js/main.fe395b8d.js",
     "static/js/453.ac07a453.chunk.js": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js",
     "static/media/Hornchurch.png": "/FootballLineupBuilder/static/media/Hornchurch.e2553f35249cb5a725eb.png",
     "static/media/Liverpool.png": "/FootballLineupBuilder/static/media/Liverpool.aa8482ba5da620703fcf.png",
@@ -28,12 +28,12 @@
     "static/media/Wolves.png": "/FootballLineupBuilder/static/media/Wolves.867b265af97592945b95.png",
     "static/media/Spurs.png": "/FootballLineupBuilder/static/media/Spurs.3ff3a59b4c35c68ee1cc.png",
     "index.html": "/FootballLineupBuilder/index.html",
-    "main.c4c8cba9.css.map": "/FootballLineupBuilder/static/css/main.c4c8cba9.css.map",
-    "main.21ce4938.js.map": "/FootballLineupBuilder/static/js/main.21ce4938.js.map",
+    "main.d7b3de76.css.map": "/FootballLineupBuilder/static/css/main.d7b3de76.css.map",
+    "main.fe395b8d.js.map": "/FootballLineupBuilder/static/js/main.fe395b8d.js.map",
     "453.ac07a453.chunk.js.map": "/FootballLineupBuilder/static/js/453.ac07a453.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c4c8cba9.css",
-    "static/js/main.21ce4938.js"
+    "static/css/main.d7b3de76.css",
+    "static/js/main.fe395b8d.js"
   ]
 }
