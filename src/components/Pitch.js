@@ -33,6 +33,7 @@ function EditablePlayerInput({
   teamColor,
   onMouseDown = () => {},
   onMouseUp = () => {},
+  
 }) {
   const [localValue, setLocalValue] = useState(playerName);
   const [inputWidth, setInputWidth] = useState(60);
@@ -77,7 +78,10 @@ function EditablePlayerInput({
     <>
 <div
   onMouseDown={onMouseDown}
+  onTouchStart={onMouseDown}
   onMouseUp={onMouseUp}
+  onTouchEnd={onMouseUp}
+
   className="player-input-wrapper"
   style={{
     position: "absolute",
@@ -356,7 +360,10 @@ const handleMouseDown = (pos) => (e) => {
   draggedPos.current = pos;
   setIsDragging(false);
   dragStarted.current = false;
-  mouseDownPos.current = { x: e.clientX, y: e.clientY };
+
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  mouseDownPos.current = { x: clientX, y: clientY };
 
   if (!pitchRef.current) return;
 
@@ -368,8 +375,8 @@ const handleMouseDown = (pos) => (e) => {
   const playerPixelY = pitchRect.top + (playerPos.y / PITCH_LENGTH) * pitchRect.height;
 
   dragOffset.current = {
-    x: e.clientX - playerPixelX,
-    y: e.clientY - playerPixelY,
+    x: clientX - playerPixelX,
+    y: clientY - playerPixelY,
   };
 };
 
@@ -419,11 +426,29 @@ const handleGlobalMouseUp = (e) => {
 };
 
 useEffect(() => {
+  const handleTouchMove = (e) => {
+    if (e.touches.length > 0) {
+      handleMouseMove({
+        clientX: e.touches[0].clientX,
+        clientY: e.touches[0].clientY,
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    handleGlobalMouseUp({ clientX: 0, clientY: 0 }); // dummy coords
+  };
+
   window.addEventListener("mousemove", handleMouseMove);
   window.addEventListener("mouseup", handleGlobalMouseUp);
+  window.addEventListener("touchmove", handleTouchMove, { passive: false });
+  window.addEventListener("touchend", handleTouchEnd);
+
   return () => {
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("mouseup", handleGlobalMouseUp);
+    window.removeEventListener("touchmove", handleTouchMove);
+    window.removeEventListener("touchend", handleTouchEnd);
   };
 }, [positions]);
 
@@ -559,6 +584,7 @@ return (
         fontSize: 18,
       }}
       onMouseDown={handleMouseDown(pos)}
+      onTouchStart={handleMouseDown(pos)}
     >
       {pos}
 

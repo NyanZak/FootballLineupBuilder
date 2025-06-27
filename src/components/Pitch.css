@@ -109,6 +109,7 @@
   .pitch-container {
     width: 350px;
     height: 420px;
+    touch-action: none;
   }
 
   .hide-on-mobile {
