@@ -393,10 +393,12 @@ const handleMouseMove = (e) => {
     setIsDragging(true);
   }
 
-  const pitchRect = pitchRef.current.getBoundingClientRect();
+  const pitchEl = pitchRef.current;
+  const pitchWidth = pitchEl.offsetWidth;
+  const pitchHeight = pitchEl.offsetHeight;
 
-  const relativeX = ((e.clientX - pitchRect.left - dragOffset.current.x) / pitchRect.width) * PITCH_WIDTH;
-  const relativeY = ((e.clientY - pitchRect.top - dragOffset.current.y) / pitchRect.height) * PITCH_LENGTH;
+  const relativeX = ((e.clientX - pitchEl.offsetLeft - dragOffset.current.x) / pitchWidth) * PITCH_WIDTH;
+  const relativeY = ((e.clientY - pitchEl.offsetTop - dragOffset.current.y) / pitchHeight) * PITCH_LENGTH;
 
   const clampedX = Math.min(Math.max(relativeX, 0), PITCH_WIDTH);
   const clampedY = Math.min(Math.max(relativeY, 0), PITCH_LENGTH);
