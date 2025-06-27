@@ -176,7 +176,7 @@ function App() {
               Reset Line Color
             </button>
 
-            <h3 style={{ marginTop: "30px" }}>Pitch Background</h3>
+            <h3 style={{ marginTop: "20px" }}>Pitch Background</h3>
             <div style={{ marginTop: "10px" }}>
               {["normal", "striped", "simple"].map((style) => (
                 <label key={style}>
