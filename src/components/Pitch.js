@@ -402,7 +402,7 @@ const handleMouseMove = (e) => {
 
   const isMobile = window.innerWidth <= 768;
 
-  const maxX = isMobile ? 2.6 : PITCH_WIDTH;
+  const maxX = isMobile ? 2.65 : PITCH_WIDTH;
   const maxY = isMobile ? 4 : PITCH_LENGTH;
 
   const clampedX = Math.min(Math.max(relativeX, 0), maxX);
